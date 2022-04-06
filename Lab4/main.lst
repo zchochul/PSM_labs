@@ -1,0 +1,389 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	__vector_7
+  12               	__vector_7:
+  13               	.LFB7:
+  14               		.file 1 "main.c"
+   1:main.c        **** #include <avr/io.h>
+   2:main.c        **** #include <stdio.h>
+   3:main.c        **** #include <avr/interrupt.h>
+   4:main.c        **** #include <util/delay.h> 
+   5:main.c        **** 
+   6:main.c        **** uint16_t count;
+   7:main.c        **** uint8_t digits[10] = {0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90};
+   8:main.c        **** uint8_t d;
+   9:main.c        **** ISR(TIMER1_COMPA_vect){
+  15               		.loc 1 9 0
+  16               		.cfi_startproc
+  17 0000 1F92      		push r1
+  18               	.LCFI0:
+  19               		.cfi_def_cfa_offset 3
+  20               		.cfi_offset 1, -2
+  21 0002 0F92      		push r0
+  22               	.LCFI1:
+  23               		.cfi_def_cfa_offset 4
+  24               		.cfi_offset 0, -3
+  25 0004 0FB6      		in r0,__SREG__
+  26 0006 0F92      		push r0
+  27 0008 1124      		clr __zero_reg__
+  28 000a 8F93      		push r24
+  29               	.LCFI2:
+  30               		.cfi_def_cfa_offset 5
+  31               		.cfi_offset 24, -4
+  32 000c 9F93      		push r25
+  33               	.LCFI3:
+  34               		.cfi_def_cfa_offset 6
+  35               		.cfi_offset 25, -5
+  36               	/* prologue: Signal */
+  37               	/* frame size = 0 */
+  38               	/* stack size = 5 */
+  39               	.L__stack_usage = 5
+  10:main.c        **** 	count--;
+  40               		.loc 1 10 0
+  41 000e 8091 0000 		lds r24,count
+  42 0012 9091 0000 		lds r25,count+1
+  43 0016 0197      		sbiw r24,1
+  44 0018 9093 0000 		sts count+1,r25
+  45 001c 8093 0000 		sts count,r24
+  11:main.c        **** 	if(count == 0){
+  46               		.loc 1 11 0
+  47 0020 892B      		or r24,r25
+  48 0022 01F4      		brne .L1
+  12:main.c        **** 		PORTB = 0x00;
+  49               		.loc 1 12 0
+  50 0024 18BA      		out 0x18,__zero_reg__
+  13:main.c        **** 		//_delay_ms(1000);
+  14:main.c        **** 		TCCR1B =0;
+  51               		.loc 1 14 0
+  52 0026 1EBC      		out 0x2e,__zero_reg__
+  53               	.L1:
+  54               	/* epilogue start */
+  15:main.c        **** 	}
+  16:main.c        **** 		
+  17:main.c        **** }
+  55               		.loc 1 17 0
+  56 0028 9F91      		pop r25
+  57 002a 8F91      		pop r24
+  58 002c 0F90      		pop r0
+  59 002e 0FBE      		out __SREG__,r0
+  60 0030 0F90      		pop r0
+  61 0032 1F90      		pop r1
+  62 0034 1895      		reti
+  63               		.cfi_endproc
+  64               	.LFE7:
+  66               	.global	__vector_10
+  68               	__vector_10:
+  69               	.LFB8:
+  18:main.c        **** 
+  19:main.c        **** ISR(TIMER0_COMP_vect){
+  70               		.loc 1 19 0
+  71               		.cfi_startproc
+  72 0036 1F92      		push r1
+  73               	.LCFI4:
+  74               		.cfi_def_cfa_offset 3
+  75               		.cfi_offset 1, -2
+  76 0038 0F92      		push r0
+  77               	.LCFI5:
+  78               		.cfi_def_cfa_offset 4
+  79               		.cfi_offset 0, -3
+  80 003a 0FB6      		in r0,__SREG__
+  81 003c 0F92      		push r0
+  82 003e 1124      		clr __zero_reg__
+  83 0040 5F93      		push r21
+  84               	.LCFI6:
+  85               		.cfi_def_cfa_offset 5
+  86               		.cfi_offset 21, -4
+  87 0042 6F93      		push r22
+  88               	.LCFI7:
+  89               		.cfi_def_cfa_offset 6
+  90               		.cfi_offset 22, -5
+  91 0044 7F93      		push r23
+  92               	.LCFI8:
+  93               		.cfi_def_cfa_offset 7
+  94               		.cfi_offset 23, -6
+  95 0046 8F93      		push r24
+  96               	.LCFI9:
+  97               		.cfi_def_cfa_offset 8
+  98               		.cfi_offset 24, -7
+  99 0048 9F93      		push r25
+ 100               	.LCFI10:
+ 101               		.cfi_def_cfa_offset 9
+ 102               		.cfi_offset 25, -8
+ 103 004a AF93      		push r26
+ 104               	.LCFI11:
+ 105               		.cfi_def_cfa_offset 10
+ 106               		.cfi_offset 26, -9
+ 107 004c BF93      		push r27
+ 108               	.LCFI12:
+ 109               		.cfi_def_cfa_offset 11
+ 110               		.cfi_offset 27, -10
+ 111 004e EF93      		push r30
+ 112               	.LCFI13:
+ 113               		.cfi_def_cfa_offset 12
+ 114               		.cfi_offset 30, -11
+ 115 0050 FF93      		push r31
+ 116               	.LCFI14:
+ 117               		.cfi_def_cfa_offset 13
+ 118               		.cfi_offset 31, -12
+ 119               	/* prologue: Signal */
+ 120               	/* frame size = 0 */
+ 121               	/* stack size = 12 */
+ 122               	.L__stack_usage = 12
+  20:main.c        **** 	d++;
+ 123               		.loc 1 20 0
+ 124 0052 8091 0000 		lds r24,d
+ 125 0056 8F5F      		subi r24,lo8(-(1))
+  21:main.c        **** 	if (d == 4){
+ 126               		.loc 1 21 0
+ 127 0058 8430      		cpi r24,lo8(4)
+ 128 005a 01F0      		breq .L5
+  20:main.c        **** 	d++;
+ 129               		.loc 1 20 0
+ 130 005c 8093 0000 		sts d,r24
+ 131 0060 00C0      		rjmp .L6
+ 132               	.L5:
+  22:main.c        **** 		d = 0;
+ 133               		.loc 1 22 0
+ 134 0062 1092 0000 		sts d,__zero_reg__
+ 135               	.L6:
+  23:main.c        **** 	}
+  24:main.c        **** 	PORTC = ~(1<<d);
+ 136               		.loc 1 24 0
+ 137 0066 81E0      		ldi r24,lo8(1)
+ 138 0068 90E0      		ldi r25,0
+ 139 006a 0090 0000 		lds r0,d
+ 140 006e 00C0      		rjmp 2f
+ 141               		1:
+ 142 0070 880F      		lsl r24
+ 143 0072 991F      		rol r25
+ 144               		2:
+ 145 0074 0A94      		dec r0
+ 146 0076 02F4      		brpl 1b
+ 147 0078 8095      		com r24
+ 148 007a 85BB      		out 0x15,r24
+  25:main.c        **** 	
+  26:main.c        **** 	if(d == 0){
+ 149               		.loc 1 26 0
+ 150 007c 8091 0000 		lds r24,d
+ 151 0080 8111      		cpse r24,__zero_reg__
+ 152 0082 00C0      		rjmp .L7
+  27:main.c        **** 		PORTD = digits[count%10];
+ 153               		.loc 1 27 0
+ 154 0084 8091 0000 		lds r24,count
+ 155 0088 9091 0000 		lds r25,count+1
+ 156 008c 6AE0      		ldi r22,lo8(10)
+ 157 008e 70E0      		ldi r23,0
+ 158 0090 0E94 0000 		call __udivmodhi4
+ 159 0094 FC01      		movw r30,r24
+ 160 0096 E050      		subi r30,lo8(-(digits))
+ 161 0098 F040      		sbci r31,hi8(-(digits))
+ 162 009a 8081      		ld r24,Z
+ 163 009c 82BB      		out 0x12,r24
+ 164               	.L7:
+  28:main.c        **** 	}
+  29:main.c        **** 	if( d == 1){
+ 165               		.loc 1 29 0
+ 166 009e 8091 0000 		lds r24,d
+ 167 00a2 8130      		cpi r24,lo8(1)
+ 168 00a4 01F4      		brne .L8
+  30:main.c        **** 		PORTD = digits[(count%100)/10];
+ 169               		.loc 1 30 0
+ 170 00a6 8091 0000 		lds r24,count
+ 171 00aa 9091 0000 		lds r25,count+1
+ 172 00ae 64E6      		ldi r22,lo8(100)
+ 173 00b0 70E0      		ldi r23,0
+ 174 00b2 0E94 0000 		call __udivmodhi4
+ 175 00b6 6AE0      		ldi r22,lo8(10)
+ 176 00b8 70E0      		ldi r23,0
+ 177 00ba 0E94 0000 		call __udivmodhi4
+ 178 00be FB01      		movw r30,r22
+ 179 00c0 E050      		subi r30,lo8(-(digits))
+ 180 00c2 F040      		sbci r31,hi8(-(digits))
+ 181 00c4 8081      		ld r24,Z
+ 182 00c6 82BB      		out 0x12,r24
+ 183               	.L8:
+  31:main.c        **** 	}
+  32:main.c        **** 	if (d == 2){
+ 184               		.loc 1 32 0
+ 185 00c8 8091 0000 		lds r24,d
+ 186 00cc 8230      		cpi r24,lo8(2)
+ 187 00ce 01F4      		brne .L9
+  33:main.c        **** 		PORTD = digits[(count%1000)/100];
+ 188               		.loc 1 33 0
+ 189 00d0 8091 0000 		lds r24,count
+ 190 00d4 9091 0000 		lds r25,count+1
+ 191 00d8 68EE      		ldi r22,lo8(-24)
+ 192 00da 73E0      		ldi r23,lo8(3)
+ 193 00dc 0E94 0000 		call __udivmodhi4
+ 194 00e0 64E6      		ldi r22,lo8(100)
+ 195 00e2 70E0      		ldi r23,0
+ 196 00e4 0E94 0000 		call __udivmodhi4
+ 197 00e8 FB01      		movw r30,r22
+ 198 00ea E050      		subi r30,lo8(-(digits))
+ 199 00ec F040      		sbci r31,hi8(-(digits))
+ 200 00ee 8081      		ld r24,Z
+ 201 00f0 82BB      		out 0x12,r24
+ 202               	.L9:
+  34:main.c        **** 	}
+  35:main.c        **** 	if ( d==3 ){
+ 203               		.loc 1 35 0
+ 204 00f2 8091 0000 		lds r24,d
+ 205 00f6 8330      		cpi r24,lo8(3)
+ 206 00f8 01F4      		brne .L4
+  36:main.c        **** 		PORTD = digits[(count%10000)/1000];
+ 207               		.loc 1 36 0
+ 208 00fa 8091 0000 		lds r24,count
+ 209 00fe 9091 0000 		lds r25,count+1
+ 210 0102 60E1      		ldi r22,lo8(16)
+ 211 0104 77E2      		ldi r23,lo8(39)
+ 212 0106 0E94 0000 		call __udivmodhi4
+ 213 010a 68EE      		ldi r22,lo8(-24)
+ 214 010c 73E0      		ldi r23,lo8(3)
+ 215 010e 0E94 0000 		call __udivmodhi4
+ 216 0112 FB01      		movw r30,r22
+ 217 0114 E050      		subi r30,lo8(-(digits))
+ 218 0116 F040      		sbci r31,hi8(-(digits))
+ 219 0118 8081      		ld r24,Z
+ 220 011a 82BB      		out 0x12,r24
+ 221               	.L4:
+ 222               	/* epilogue start */
+  37:main.c        **** 	}
+  38:main.c        **** }
+ 223               		.loc 1 38 0
+ 224 011c FF91      		pop r31
+ 225 011e EF91      		pop r30
+ 226 0120 BF91      		pop r27
+ 227 0122 AF91      		pop r26
+ 228 0124 9F91      		pop r25
+ 229 0126 8F91      		pop r24
+ 230 0128 7F91      		pop r23
+ 231 012a 6F91      		pop r22
+ 232 012c 5F91      		pop r21
+ 233 012e 0F90      		pop r0
+ 234 0130 0FBE      		out __SREG__,r0
+ 235 0132 0F90      		pop r0
+ 236 0134 1F90      		pop r1
+ 237 0136 1895      		reti
+ 238               		.cfi_endproc
+ 239               	.LFE8:
+ 241               		.section	.text.startup,"ax",@progbits
+ 242               	.global	main
+ 244               	main:
+ 245               	.LFB9:
+  39:main.c        **** int main(void){
+ 246               		.loc 1 39 0
+ 247               		.cfi_startproc
+ 248               	/* prologue: function */
+ 249               	/* frame size = 0 */
+ 250               	/* stack size = 0 */
+ 251               	.L__stack_usage = 0
+  40:main.c        **** 	count = 1000;
+ 252               		.loc 1 40 0
+ 253 0000 88EE      		ldi r24,lo8(-24)
+ 254 0002 93E0      		ldi r25,lo8(3)
+ 255 0004 9093 0000 		sts count+1,r25
+ 256 0008 8093 0000 		sts count,r24
+  41:main.c        **** 	//wejscie wyjscie
+  42:main.c        **** 	DDRC = 0xff;
+ 257               		.loc 1 42 0
+ 258 000c 8FEF      		ldi r24,lo8(-1)
+ 259 000e 84BB      		out 0x14,r24
+  43:main.c        **** 	DDRD = 0xff;
+ 260               		.loc 1 43 0
+ 261 0010 81BB      		out 0x11,r24
+  44:main.c        **** 	//brzeczyk
+  45:main.c        **** 	DDRB = 0xff;
+ 262               		.loc 1 45 0
+ 263 0012 87BB      		out 0x17,r24
+  46:main.c        **** 	PORTB=0xff;
+ 264               		.loc 1 46 0
+ 265 0014 88BB      		out 0x18,r24
+  47:main.c        **** 	//wgm daje tryb a CS daje prescaler
+  48:main.c        **** 	TCCR1B |= (1<<WGM12)|(1<<CS10);
+ 266               		.loc 1 48 0
+ 267 0016 8EB5      		in r24,0x2e
+ 268 0018 8960      		ori r24,lo8(9)
+ 269 001a 8EBD      		out 0x2e,r24
+  49:main.c        **** 	//bit porownawczy
+  50:main.c        **** 	OCR1A = 16000; //skok o sekunde
+ 270               		.loc 1 50 0
+ 271 001c 80E8      		ldi r24,lo8(-128)
+ 272 001e 9EE3      		ldi r25,lo8(62)
+ 273 0020 9BBD      		out 0x2a+1,r25
+ 274 0022 8ABD      		out 0x2a,r24
+  51:main.c        **** 	TIMSK |= (1<< OCIE1A);
+ 275               		.loc 1 51 0
+ 276 0024 89B7      		in r24,0x39
+ 277 0026 8061      		ori r24,lo8(16)
+ 278 0028 89BF      		out 0x39,r24
+  52:main.c        **** 	
+  53:main.c        **** 	//drugi interrupt
+  54:main.c        **** 	OCR0 = 39; //200 razy na sekunde
+ 279               		.loc 1 54 0
+ 280 002a 87E2      		ldi r24,lo8(39)
+ 281 002c 8CBF      		out 0x3c,r24
+  55:main.c        **** 	TCCR0 |= (1<<WGM01)|(1<<CS02)|(1<<CS00); //CTC i prescaler
+ 282               		.loc 1 55 0
+ 283 002e 83B7      		in r24,0x33
+ 284 0030 8D60      		ori r24,lo8(13)
+ 285 0032 83BF      		out 0x33,r24
+  56:main.c        **** 	TIMSK |=(1<<OCIE0);
+ 286               		.loc 1 56 0
+ 287 0034 89B7      		in r24,0x39
+ 288 0036 8260      		ori r24,lo8(2)
+ 289 0038 89BF      		out 0x39,r24
+  57:main.c        **** 	
+  58:main.c        **** 	sei();
+ 290               		.loc 1 58 0
+ 291               	/* #APP */
+ 292               	 ;  58 "main.c" 1
+ 293 003a 7894      		sei
+ 294               	 ;  0 "" 2
+ 295               	/* #NOAPP */
+ 296               	.L12:
+ 297 003c 00C0      		rjmp .L12
+ 298               		.cfi_endproc
+ 299               	.LFE9:
+ 301               		.comm	d,1,1
+ 302               	.global	digits
+ 303               		.data
+ 306               	digits:
+ 307 0000 C0        		.byte	-64
+ 308 0001 F9        		.byte	-7
+ 309 0002 A4        		.byte	-92
+ 310 0003 B0        		.byte	-80
+ 311 0004 99        		.byte	-103
+ 312 0005 92        		.byte	-110
+ 313 0006 82        		.byte	-126
+ 314 0007 F8        		.byte	-8
+ 315 0008 80        		.byte	-128
+ 316 0009 90        		.byte	-112
+ 317               		.comm	count,2,1
+ 318               		.text
+ 319               	.Letext0:
+ 320               		.file 2 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/ccCvdOdY.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccCvdOdY.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccCvdOdY.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccCvdOdY.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccCvdOdY.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccCvdOdY.s:12     .text:0000000000000000 __vector_7
+                            *COM*:0000000000000002 count
+     /tmp/ccCvdOdY.s:68     .text:0000000000000036 __vector_10
+                            *COM*:0000000000000001 d
+     /tmp/ccCvdOdY.s:306    .data:0000000000000000 digits
+     /tmp/ccCvdOdY.s:244    .text.startup:0000000000000000 main
+
+UNDEFINED SYMBOLS
+__udivmodhi4
+__do_copy_data
+__do_clear_bss

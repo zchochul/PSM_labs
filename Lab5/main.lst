@@ -1,0 +1,583 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               		.section	.rodata.str1.1,"aMS",@progbits,1
+  11               	.LC0:
+  12 0000 2564 202B 		.string	"%d + %d = %d \n"
+  12      2025 6420 
+  12      3D20 2564 
+  12      200A 00
+  13               	.LC1:
+  14 000f 2564 202D 		.string	"%d - %d = %d \n"
+  14      2025 6420 
+  14      3D20 2564 
+  14      200A 00
+  15               	.LC2:
+  16 001e 2564 202A 		.string	"%d * %d = %d \n"
+  16      2025 6420 
+  16      3D20 2564 
+  16      200A 00
+  17               	.LC3:
+  18 002d 4E69 6520 		.string	"Nie dziel cholero przez zero! \n"
+  18      647A 6965 
+  18      6C20 6368 
+  18      6F6C 6572 
+  18      6F20 7072 
+  19               	.LC4:
+  20 004d 2564 202F 		.string	"%d / %d = %d \n"
+  20      2025 6420 
+  20      3D20 2564 
+  20      200A 00
+  21               		.text
+  22               	.global	__vector_13
+  24               	__vector_13:
+  25               	.LFB11:
+  26               		.file 1 "main.c"
+   1:main.c        **** #include <avr/io.h>
+   2:main.c        **** #include <stdio.h>
+   3:main.c        **** #include <avr/interrupt.h>
+   4:main.c        **** #include <util/delay.h> 
+   5:main.c        **** #include <string.h>
+   6:main.c        **** #include <stdlib.h>
+   7:main.c        **** #include "usart.h"
+   8:main.c        **** 
+   9:main.c        **** 
+  10:main.c        **** 
+  11:main.c        **** FILE u_stream = FDEV_SETUP_STREAM(u_putc, NULL, _FDEV_SETUP_WRITE);
+  12:main.c        **** uint8_t x, y;
+  13:main.c        **** uint8_t bufor[10];
+  14:main.c        **** uint8_t i;
+  15:main.c        **** uint8_t etap;
+  16:main.c        **** 
+  17:main.c        **** ISR(USART_RXC_vect){
+  27               		.loc 1 17 0
+  28               		.cfi_startproc
+  29 0000 1F92      		push r1
+  30               	.LCFI0:
+  31               		.cfi_def_cfa_offset 3
+  32               		.cfi_offset 1, -2
+  33 0002 0F92      		push r0
+  34               	.LCFI1:
+  35               		.cfi_def_cfa_offset 4
+  36               		.cfi_offset 0, -3
+  37 0004 0FB6      		in r0,__SREG__
+  38 0006 0F92      		push r0
+  39 0008 1124      		clr __zero_reg__
+  40 000a 2F93      		push r18
+  41               	.LCFI2:
+  42               		.cfi_def_cfa_offset 5
+  43               		.cfi_offset 18, -4
+  44 000c 3F93      		push r19
+  45               	.LCFI3:
+  46               		.cfi_def_cfa_offset 6
+  47               		.cfi_offset 19, -5
+  48 000e 4F93      		push r20
+  49               	.LCFI4:
+  50               		.cfi_def_cfa_offset 7
+  51               		.cfi_offset 20, -6
+  52 0010 5F93      		push r21
+  53               	.LCFI5:
+  54               		.cfi_def_cfa_offset 8
+  55               		.cfi_offset 21, -7
+  56 0012 6F93      		push r22
+  57               	.LCFI6:
+  58               		.cfi_def_cfa_offset 9
+  59               		.cfi_offset 22, -8
+  60 0014 7F93      		push r23
+  61               	.LCFI7:
+  62               		.cfi_def_cfa_offset 10
+  63               		.cfi_offset 23, -9
+  64 0016 8F93      		push r24
+  65               	.LCFI8:
+  66               		.cfi_def_cfa_offset 11
+  67               		.cfi_offset 24, -10
+  68 0018 9F93      		push r25
+  69               	.LCFI9:
+  70               		.cfi_def_cfa_offset 12
+  71               		.cfi_offset 25, -11
+  72 001a AF93      		push r26
+  73               	.LCFI10:
+  74               		.cfi_def_cfa_offset 13
+  75               		.cfi_offset 26, -12
+  76 001c BF93      		push r27
+  77               	.LCFI11:
+  78               		.cfi_def_cfa_offset 14
+  79               		.cfi_offset 27, -13
+  80 001e EF93      		push r30
+  81               	.LCFI12:
+  82               		.cfi_def_cfa_offset 15
+  83               		.cfi_offset 30, -14
+  84 0020 FF93      		push r31
+  85               	.LCFI13:
+  86               		.cfi_def_cfa_offset 16
+  87               		.cfi_offset 31, -15
+  88               	/* prologue: Signal */
+  89               	/* frame size = 0 */
+  90               	/* stack size = 15 */
+  91               	.L__stack_usage = 15
+  18:main.c        **** 	bufor[i]=UDR;
+  92               		.loc 1 18 0
+  93 0022 8091 0000 		lds r24,i
+  94 0026 9CB1      		in r25,0xc
+  95 0028 E82F      		mov r30,r24
+  96 002a F0E0      		ldi r31,0
+  97 002c E050      		subi r30,lo8(-(bufor))
+  98 002e F040      		sbci r31,hi8(-(bufor))
+  99 0030 9083      		st Z,r25
+  19:main.c        **** 	if(bufor[i] == '\n' || bufor[i] == '\r'){
+ 100               		.loc 1 19 0
+ 101 0032 9A30      		cpi r25,lo8(10)
+ 102 0034 01F0      		breq .L2
+ 103               		.loc 1 19 0 is_stmt 0 discriminator 1
+ 104 0036 9D30      		cpi r25,lo8(13)
+ 105 0038 01F0      		breq .+2
+ 106 003a 00C0      		rjmp .L3
+ 107               	.L2:
+  20:main.c        **** 	/*
+  21:main.c        **** 		if(!strncmp( (const char *) bufor, "off", 3 ))
+  22:main.c        **** 			PORTC = 0xff;
+  23:main.c        **** 		if(!strncmp( (const char *) bufor, "on", 2 ))
+  24:main.c        **** 			PORTC = 0x00;
+  25:main.c        **** 		i=0;
+  26:main.c        **** 	*/
+  27:main.c        **** 	
+  28:main.c        **** 	if (etap == 0){
+ 108               		.loc 1 28 0 is_stmt 1
+ 109 003c 8091 0000 		lds r24,etap
+ 110 0040 8111      		cpse r24,__zero_reg__
+ 111 0042 00C0      		rjmp .L4
+  29:main.c        **** 		
+  30:main.c        **** 		x = atoi( (const char*) bufor);
+ 112               		.loc 1 30 0
+ 113 0044 80E0      		ldi r24,lo8(bufor)
+ 114 0046 90E0      		ldi r25,hi8(bufor)
+ 115 0048 0E94 0000 		call atoi
+ 116 004c 8093 0000 		sts x,r24
+ 117 0050 00C0      		rjmp .L5
+ 118               	.L4:
+  31:main.c        **** 	}
+  32:main.c        **** 	if (etap == 1){
+ 119               		.loc 1 32 0
+ 120 0052 8130      		cpi r24,lo8(1)
+ 121 0054 01F4      		brne .L6
+  33:main.c        **** 		y = atoi( (const char*) bufor);
+ 122               		.loc 1 33 0
+ 123 0056 80E0      		ldi r24,lo8(bufor)
+ 124 0058 90E0      		ldi r25,hi8(bufor)
+ 125 005a 0E94 0000 		call atoi
+ 126 005e 8093 0000 		sts y,r24
+ 127 0062 00C0      		rjmp .L5
+ 128               	.L6:
+  34:main.c        **** 	}
+  35:main.c        **** 	if (etap == 2){
+ 129               		.loc 1 35 0
+ 130 0064 8230      		cpi r24,lo8(2)
+ 131 0066 01F0      		breq .+2
+ 132 0068 00C0      		rjmp .L5
+  36:main.c        **** 		if (bufor[0] == '+'){
+ 133               		.loc 1 36 0
+ 134 006a 8091 0000 		lds r24,bufor
+ 135 006e 8B32      		cpi r24,lo8(43)
+ 136 0070 01F4      		brne .L8
+  37:main.c        **** 			fprintf(&u_stream,"%d + %d = %d \n", x, y, x+y);
+ 137               		.loc 1 37 0
+ 138 0072 2091 0000 		lds r18,x
+ 139 0076 3091 0000 		lds r19,y
+ 140 007a 832F      		mov r24,r19
+ 141 007c 90E0      		ldi r25,0
+ 142 007e 820F      		add r24,r18
+ 143 0080 911D      		adc r25,__zero_reg__
+ 144 0082 9F93      		push r25
+ 145               	.LCFI14:
+ 146               		.cfi_def_cfa_offset 17
+ 147 0084 8F93      		push r24
+ 148               	.LCFI15:
+ 149               		.cfi_def_cfa_offset 18
+ 150 0086 1F92      		push __zero_reg__
+ 151               	.LCFI16:
+ 152               		.cfi_def_cfa_offset 19
+ 153 0088 3F93      		push r19
+ 154               	.LCFI17:
+ 155               		.cfi_def_cfa_offset 20
+ 156 008a 1F92      		push __zero_reg__
+ 157               	.LCFI18:
+ 158               		.cfi_def_cfa_offset 21
+ 159 008c 2F93      		push r18
+ 160               	.LCFI19:
+ 161               		.cfi_def_cfa_offset 22
+ 162 008e 80E0      		ldi r24,lo8(.LC0)
+ 163 0090 90E0      		ldi r25,hi8(.LC0)
+ 164 0092 9F93      		push r25
+ 165               	.LCFI20:
+ 166               		.cfi_def_cfa_offset 23
+ 167 0094 8F93      		push r24
+ 168               	.LCFI21:
+ 169               		.cfi_def_cfa_offset 24
+ 170 0096 80E0      		ldi r24,lo8(u_stream)
+ 171 0098 90E0      		ldi r25,hi8(u_stream)
+ 172 009a 9F93      		push r25
+ 173               	.LCFI22:
+ 174               		.cfi_def_cfa_offset 25
+ 175 009c 8F93      		push r24
+ 176               	.LCFI23:
+ 177               		.cfi_def_cfa_offset 26
+ 178 009e 0E94 0000 		call fprintf
+ 179 00a2 8DB7      		in r24,__SP_L__
+ 180 00a4 9EB7      		in r25,__SP_H__
+ 181 00a6 0A96      		adiw r24,10
+ 182 00a8 0FB6      		in __tmp_reg__,__SREG__
+ 183 00aa F894      		cli
+ 184 00ac 9EBF      		out __SP_H__,r25
+ 185 00ae 0FBE      		out __SREG__,__tmp_reg__
+ 186 00b0 8DBF      		out __SP_L__,r24
+ 187               	.LCFI24:
+ 188               		.cfi_def_cfa_offset 16
+ 189               	.L8:
+  38:main.c        **** 		}
+  39:main.c        **** 		if (bufor[0] == '-'){
+ 190               		.loc 1 39 0
+ 191 00b2 8091 0000 		lds r24,bufor
+ 192 00b6 8D32      		cpi r24,lo8(45)
+ 193 00b8 01F4      		brne .L9
+  40:main.c        **** 			fprintf(&u_stream,"%d - %d = %d \n", x, y, x-y);
+ 194               		.loc 1 40 0
+ 195 00ba 2091 0000 		lds r18,x
+ 196 00be 822F      		mov r24,r18
+ 197 00c0 90E0      		ldi r25,0
+ 198 00c2 3091 0000 		lds r19,y
+ 199 00c6 831B      		sub r24,r19
+ 200 00c8 9109      		sbc r25,__zero_reg__
+ 201 00ca 9F93      		push r25
+ 202               	.LCFI25:
+ 203               		.cfi_def_cfa_offset 17
+ 204 00cc 8F93      		push r24
+ 205               	.LCFI26:
+ 206               		.cfi_def_cfa_offset 18
+ 207 00ce 1F92      		push __zero_reg__
+ 208               	.LCFI27:
+ 209               		.cfi_def_cfa_offset 19
+ 210 00d0 3F93      		push r19
+ 211               	.LCFI28:
+ 212               		.cfi_def_cfa_offset 20
+ 213 00d2 1F92      		push __zero_reg__
+ 214               	.LCFI29:
+ 215               		.cfi_def_cfa_offset 21
+ 216 00d4 2F93      		push r18
+ 217               	.LCFI30:
+ 218               		.cfi_def_cfa_offset 22
+ 219 00d6 80E0      		ldi r24,lo8(.LC1)
+ 220 00d8 90E0      		ldi r25,hi8(.LC1)
+ 221 00da 9F93      		push r25
+ 222               	.LCFI31:
+ 223               		.cfi_def_cfa_offset 23
+ 224 00dc 8F93      		push r24
+ 225               	.LCFI32:
+ 226               		.cfi_def_cfa_offset 24
+ 227 00de 80E0      		ldi r24,lo8(u_stream)
+ 228 00e0 90E0      		ldi r25,hi8(u_stream)
+ 229 00e2 9F93      		push r25
+ 230               	.LCFI33:
+ 231               		.cfi_def_cfa_offset 25
+ 232 00e4 8F93      		push r24
+ 233               	.LCFI34:
+ 234               		.cfi_def_cfa_offset 26
+ 235 00e6 0E94 0000 		call fprintf
+ 236 00ea 8DB7      		in r24,__SP_L__
+ 237 00ec 9EB7      		in r25,__SP_H__
+ 238 00ee 0A96      		adiw r24,10
+ 239 00f0 0FB6      		in __tmp_reg__,__SREG__
+ 240 00f2 F894      		cli
+ 241 00f4 9EBF      		out __SP_H__,r25
+ 242 00f6 0FBE      		out __SREG__,__tmp_reg__
+ 243 00f8 8DBF      		out __SP_L__,r24
+ 244               	.LCFI35:
+ 245               		.cfi_def_cfa_offset 16
+ 246               	.L9:
+  41:main.c        **** 		}
+  42:main.c        **** 		if (bufor[0] == '*'){
+ 247               		.loc 1 42 0
+ 248 00fa 8091 0000 		lds r24,bufor
+ 249 00fe 8A32      		cpi r24,lo8(42)
+ 250 0100 01F4      		brne .L10
+  43:main.c        **** 			fprintf(&u_stream,"%d * %d = %d \n", x, y, x*y);
+ 251               		.loc 1 43 0
+ 252 0102 8091 0000 		lds r24,x
+ 253 0106 9091 0000 		lds r25,y
+ 254 010a 899F      		mul r24,r25
+ 255 010c 9001      		movw r18,r0
+ 256 010e 1124      		clr __zero_reg__
+ 257 0110 3F93      		push r19
+ 258               	.LCFI36:
+ 259               		.cfi_def_cfa_offset 17
+ 260 0112 2F93      		push r18
+ 261               	.LCFI37:
+ 262               		.cfi_def_cfa_offset 18
+ 263 0114 1F92      		push __zero_reg__
+ 264               	.LCFI38:
+ 265               		.cfi_def_cfa_offset 19
+ 266 0116 9F93      		push r25
+ 267               	.LCFI39:
+ 268               		.cfi_def_cfa_offset 20
+ 269 0118 1F92      		push __zero_reg__
+ 270               	.LCFI40:
+ 271               		.cfi_def_cfa_offset 21
+ 272 011a 8F93      		push r24
+ 273               	.LCFI41:
+ 274               		.cfi_def_cfa_offset 22
+ 275 011c 80E0      		ldi r24,lo8(.LC2)
+ 276 011e 90E0      		ldi r25,hi8(.LC2)
+ 277 0120 9F93      		push r25
+ 278               	.LCFI42:
+ 279               		.cfi_def_cfa_offset 23
+ 280 0122 8F93      		push r24
+ 281               	.LCFI43:
+ 282               		.cfi_def_cfa_offset 24
+ 283 0124 80E0      		ldi r24,lo8(u_stream)
+ 284 0126 90E0      		ldi r25,hi8(u_stream)
+ 285 0128 9F93      		push r25
+ 286               	.LCFI44:
+ 287               		.cfi_def_cfa_offset 25
+ 288 012a 8F93      		push r24
+ 289               	.LCFI45:
+ 290               		.cfi_def_cfa_offset 26
+ 291 012c 0E94 0000 		call fprintf
+ 292 0130 8DB7      		in r24,__SP_L__
+ 293 0132 9EB7      		in r25,__SP_H__
+ 294 0134 0A96      		adiw r24,10
+ 295 0136 0FB6      		in __tmp_reg__,__SREG__
+ 296 0138 F894      		cli
+ 297 013a 9EBF      		out __SP_H__,r25
+ 298 013c 0FBE      		out __SREG__,__tmp_reg__
+ 299 013e 8DBF      		out __SP_L__,r24
+ 300               	.LCFI46:
+ 301               		.cfi_def_cfa_offset 16
+ 302               	.L10:
+  44:main.c        **** 		}
+  45:main.c        **** 		if (bufor[0] == '/'){
+ 303               		.loc 1 45 0
+ 304 0140 8091 0000 		lds r24,bufor
+ 305 0144 8F32      		cpi r24,lo8(47)
+ 306 0146 01F4      		brne .L5
+  46:main.c        **** 			if(y == 0)
+ 307               		.loc 1 46 0
+ 308 0148 2091 0000 		lds r18,y
+ 309 014c 2111      		cpse r18,__zero_reg__
+ 310 014e 00C0      		rjmp .L12
+  47:main.c        **** 				fprintf(&u_stream,"Nie dziel cholero przez zero! \n");
+ 311               		.loc 1 47 0
+ 312 0150 60E0      		ldi r22,lo8(u_stream)
+ 313 0152 70E0      		ldi r23,hi8(u_stream)
+ 314 0154 80E0      		ldi r24,lo8(.LC3)
+ 315 0156 90E0      		ldi r25,hi8(.LC3)
+ 316 0158 0E94 0000 		call fputs
+ 317 015c 00C0      		rjmp .L5
+ 318               	.L12:
+  48:main.c        **** 			else
+  49:main.c        **** 				fprintf(&u_stream,"%d / %d = %d \n", x, y, x/y);
+ 319               		.loc 1 49 0
+ 320 015e 3091 0000 		lds r19,x
+ 321 0162 832F      		mov r24,r19
+ 322 0164 622F      		mov r22,r18
+ 323 0166 0E94 0000 		call __udivmodqi4
+ 324 016a 1F92      		push __zero_reg__
+ 325               	.LCFI47:
+ 326               		.cfi_def_cfa_offset 17
+ 327 016c 8F93      		push r24
+ 328               	.LCFI48:
+ 329               		.cfi_def_cfa_offset 18
+ 330 016e 1F92      		push __zero_reg__
+ 331               	.LCFI49:
+ 332               		.cfi_def_cfa_offset 19
+ 333 0170 2F93      		push r18
+ 334               	.LCFI50:
+ 335               		.cfi_def_cfa_offset 20
+ 336 0172 1F92      		push __zero_reg__
+ 337               	.LCFI51:
+ 338               		.cfi_def_cfa_offset 21
+ 339 0174 3F93      		push r19
+ 340               	.LCFI52:
+ 341               		.cfi_def_cfa_offset 22
+ 342 0176 80E0      		ldi r24,lo8(.LC4)
+ 343 0178 90E0      		ldi r25,hi8(.LC4)
+ 344 017a 9F93      		push r25
+ 345               	.LCFI53:
+ 346               		.cfi_def_cfa_offset 23
+ 347 017c 8F93      		push r24
+ 348               	.LCFI54:
+ 349               		.cfi_def_cfa_offset 24
+ 350 017e 80E0      		ldi r24,lo8(u_stream)
+ 351 0180 90E0      		ldi r25,hi8(u_stream)
+ 352 0182 9F93      		push r25
+ 353               	.LCFI55:
+ 354               		.cfi_def_cfa_offset 25
+ 355 0184 8F93      		push r24
+ 356               	.LCFI56:
+ 357               		.cfi_def_cfa_offset 26
+ 358 0186 0E94 0000 		call fprintf
+ 359 018a 8DB7      		in r24,__SP_L__
+ 360 018c 9EB7      		in r25,__SP_H__
+ 361 018e 0A96      		adiw r24,10
+ 362 0190 0FB6      		in __tmp_reg__,__SREG__
+ 363 0192 F894      		cli
+ 364 0194 9EBF      		out __SP_H__,r25
+ 365 0196 0FBE      		out __SREG__,__tmp_reg__
+ 366 0198 8DBF      		out __SP_L__,r24
+ 367               	.LCFI57:
+ 368               		.cfi_def_cfa_offset 16
+ 369               	.L5:
+  50:main.c        **** 		}
+  51:main.c        **** 	}
+  52:main.c        **** 		i=0;
+ 370               		.loc 1 52 0
+ 371 019a 1092 0000 		sts i,__zero_reg__
+  53:main.c        **** 		etap++;
+ 372               		.loc 1 53 0
+ 373 019e 8091 0000 		lds r24,etap
+ 374 01a2 8F5F      		subi r24,lo8(-(1))
+  54:main.c        **** 		if(etap == 3)
+ 375               		.loc 1 54 0
+ 376 01a4 8330      		cpi r24,lo8(3)
+ 377 01a6 01F0      		breq .L13
+  53:main.c        **** 		etap++;
+ 378               		.loc 1 53 0
+ 379 01a8 8093 0000 		sts etap,r24
+ 380 01ac 00C0      		rjmp .L1
+ 381               	.L13:
+  55:main.c        **** 			etap = 0;
+ 382               		.loc 1 55 0
+ 383 01ae 1092 0000 		sts etap,__zero_reg__
+ 384 01b2 00C0      		rjmp .L1
+ 385               	.L3:
+  56:main.c        **** 	}
+  57:main.c        **** 	else
+  58:main.c        **** 		i++;
+ 386               		.loc 1 58 0
+ 387 01b4 8F5F      		subi r24,lo8(-(1))
+ 388 01b6 8093 0000 		sts i,r24
+ 389               	.L1:
+ 390               	/* epilogue start */
+  59:main.c        **** 	
+  60:main.c        **** }
+ 391               		.loc 1 60 0
+ 392 01ba FF91      		pop r31
+ 393 01bc EF91      		pop r30
+ 394 01be BF91      		pop r27
+ 395 01c0 AF91      		pop r26
+ 396 01c2 9F91      		pop r25
+ 397 01c4 8F91      		pop r24
+ 398 01c6 7F91      		pop r23
+ 399 01c8 6F91      		pop r22
+ 400 01ca 5F91      		pop r21
+ 401 01cc 4F91      		pop r20
+ 402 01ce 3F91      		pop r19
+ 403 01d0 2F91      		pop r18
+ 404 01d2 0F90      		pop r0
+ 405 01d4 0FBE      		out __SREG__,r0
+ 406 01d6 0F90      		pop r0
+ 407 01d8 1F90      		pop r1
+ 408 01da 1895      		reti
+ 409               		.cfi_endproc
+ 410               	.LFE11:
+ 412               		.section	.rodata.str1.1
+ 413               	.LC5:
+ 414 005c 5769 7461 		.string	"Witaj podaj pierwsza liczbe! \n"
+ 414      6A20 706F 
+ 414      6461 6A20 
+ 414      7069 6572 
+ 414      7773 7A61 
+ 415               		.section	.text.startup,"ax",@progbits
+ 416               	.global	main
+ 418               	main:
+ 419               	.LFB12:
+  61:main.c        **** 
+  62:main.c        **** 
+  63:main.c        **** int main(void){
+ 420               		.loc 1 63 0
+ 421               		.cfi_startproc
+ 422               	/* prologue: function */
+ 423               	/* frame size = 0 */
+ 424               	/* stack size = 0 */
+ 425               	.L__stack_usage = 0
+  64:main.c        **** 	USART_Init(1); //500 000 baud
+ 426               		.loc 1 64 0
+ 427 0000 81E0      		ldi r24,lo8(1)
+ 428 0002 90E0      		ldi r25,0
+ 429 0004 0E94 0000 		call USART_Init
+ 430               	.LVL0:
+  65:main.c        **** 	DDRC = 0xff;
+ 431               		.loc 1 65 0
+ 432 0008 8FEF      		ldi r24,lo8(-1)
+ 433 000a 84BB      		out 0x14,r24
+  66:main.c        **** 	PORTC = 0xff;
+ 434               		.loc 1 66 0
+ 435 000c 85BB      		out 0x15,r24
+  67:main.c        **** 	sei();
+ 436               		.loc 1 67 0
+ 437               	/* #APP */
+ 438               	 ;  67 "main.c" 1
+ 439 000e 7894      		sei
+ 440               	 ;  0 "" 2
+  68:main.c        **** 	fprintf(&u_stream,"Witaj podaj pierwsza liczbe! \n");
+ 441               		.loc 1 68 0
+ 442               	/* #NOAPP */
+ 443 0010 60E0      		ldi r22,lo8(u_stream)
+ 444 0012 70E0      		ldi r23,hi8(u_stream)
+ 445 0014 80E0      		ldi r24,lo8(.LC5)
+ 446 0016 90E0      		ldi r25,hi8(.LC5)
+ 447 0018 0E94 0000 		call fputs
+ 448               	.LVL1:
+ 449               	.L20:
+ 450 001c 00C0      		rjmp .L20
+ 451               		.cfi_endproc
+ 452               	.LFE12:
+ 454               		.comm	etap,1,1
+ 455               		.comm	i,1,1
+ 456               		.comm	bufor,10,1
+ 457               		.comm	y,1,1
+ 458               		.comm	x,1,1
+ 459               	.global	u_stream
+ 460               		.data
+ 463               	u_stream:
+ 464 0000 0000 00   		.zero	3
+ 465 0003 02        		.byte	2
+ 466 0004 0000 0000 		.zero	4
+ 467 0008 0000      		.word	gs(u_putc)
+ 468 000a 0000      		.word	0
+ 469 000c 0000      		.word	0
+ 470               		.text
+ 471               	.Letext0:
+ 472               		.file 2 "/usr/lib/avr/include/stdio.h"
+ 473               		.file 3 "/usr/lib/avr/include/stdint.h"
+ 474               		.file 4 "usart.h"
+ 475               		.file 5 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/cc1poPKN.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc1poPKN.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc1poPKN.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc1poPKN.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc1poPKN.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc1poPKN.s:24     .text:0000000000000000 __vector_13
+                            *COM*:0000000000000001 i
+                            *COM*:000000000000000a bufor
+                            *COM*:0000000000000001 etap
+                            *COM*:0000000000000001 x
+                            *COM*:0000000000000001 y
+     /tmp/cc1poPKN.s:463    .data:0000000000000000 u_stream
+     /tmp/cc1poPKN.s:418    .text.startup:0000000000000000 main
+
+UNDEFINED SYMBOLS
+atoi
+fprintf
+fputs
+__udivmodqi4
+USART_Init
+u_putc
+__do_copy_data
+__do_clear_bss
