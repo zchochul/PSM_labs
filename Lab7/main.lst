@@ -20,7 +20,7 @@
    7:main.c        **** uint8_t x, y;
    8:main.c        **** uint8_t bufor[10];
    9:main.c        **** uint8_t i;
-  10:main.c        **** uint8_t etap;
+  10:main.c        **** 
   11:main.c        **** 
   12:main.c        **** ISR(USART_RXC_vect){
   15               		.loc 1 12 0
@@ -105,7 +105,7 @@
   92 0036 9D30      		cpi r25,lo8(13)
   93 0038 01F4      		brne .L3
   94               	.L2:
-  95               	.LBB4:
+  95               	.LBB10:
   15:main.c        **** 		x = atoi( (const char*) bufor);
   96               		.loc 1 15 0 is_stmt 1
   97 003a 80E0      		ldi r24,lo8(bufor)
@@ -126,7 +126,7 @@
   17:main.c        **** 		i=0;
  111               		.loc 1 17 0
  112 0056 1092 0000 		sts i,__zero_reg__
- 113               	.LBE4:
+ 113               	.LBE10:
   14:main.c        **** 		x = atoi( (const char*) bufor);
  114               		.loc 1 14 0
  115 005a 00C0      		rjmp .L1
@@ -187,58 +187,68 @@
  159 0002 90E0      		ldi r25,0
  160 0004 0E94 0000 		call USART_Init
  161               	.LVL1:
-  27:main.c        **** 	sei();
- 162               		.loc 1 27 0
- 163               	/* #APP */
- 164               	 ;  27 "main.c" 1
- 165 0008 7894      		sei
- 166               	 ;  0 "" 2
+  27:main.c        **** 	//sei(); odcinamy komunikacje z uzytkownikiem
   28:main.c        **** 	fprintf(&u_stream,"Witaj podaj pierwsza liczbe! \n");
- 167               		.loc 1 28 0
- 168               	/* #NOAPP */
- 169 000a 60E0      		ldi r22,lo8(u_stream)
- 170 000c 70E0      		ldi r23,hi8(u_stream)
- 171 000e 80E0      		ldi r24,lo8(.LC0)
- 172 0010 90E0      		ldi r25,hi8(.LC0)
- 173 0012 0E94 0000 		call fputs
- 174               	.LVL2:
+ 162               		.loc 1 28 0
+ 163 0008 60E0      		ldi r22,lo8(u_stream)
+ 164 000a 70E0      		ldi r23,hi8(u_stream)
+ 165 000c 80E0      		ldi r24,lo8(.LC0)
+ 166 000e 90E0      		ldi r25,hi8(.LC0)
+ 167 0010 0E94 0000 		call fputs
+ 168               	.LVL2:
   29:main.c        **** 	
   30:main.c        **** 	//okres 20ms (1 przez 1-2 ms)
   31:main.c        **** 	
   32:main.c        **** 	//do ICR1 wpisujemy 39 999
   33:main.c        **** 	ICR1 = 39999;
- 175               		.loc 1 33 0
- 176 0016 8FE3      		ldi r24,lo8(63)
- 177 0018 9CE9      		ldi r25,lo8(-100)
- 178 001a 97BD      		out 0x26+1,r25
- 179 001c 86BD      		out 0x26,r24
-  34:main.c        **** 	DDRD = 0xff;
- 180               		.loc 1 34 0
- 181 001e 8FEF      		ldi r24,lo8(-1)
- 182 0020 81BB      		out 0x11,r24
-  35:main.c        **** 	
-  36:main.c        **** 	//COM1A1 (1)  COM1A0 (0) zerujemy stan jak jest 0, jedynkujemy jak OCR1
-  37:main.c        **** 	TCCR1A |= (1<<COM1A1) | (1<<WGM11);
- 183               		.loc 1 37 0
- 184 0022 8FB5      		in r24,0x2f
- 185 0024 8268      		ori r24,lo8(-126)
- 186 0026 8FBD      		out 0x2f,r24
-  38:main.c        **** 	TCCR1B |= (1<<WGM12) | (1<<WGM13) | (1<<CS11); //WGM jest od trybu, chcielismy jakis 14
- 187               		.loc 1 38 0
- 188 0028 8EB5      		in r24,0x2e
- 189 002a 8A61      		ori r24,lo8(26)
- 190 002c 8EBD      		out 0x2e,r24
-  39:main.c        **** 	
-  40:main.c        **** 	OCR1A = 3000; //wartosc centralna
- 191               		.loc 1 40 0
- 192 002e 88EB      		ldi r24,lo8(-72)
- 193 0030 9BE0      		ldi r25,lo8(11)
- 194 0032 9BBD      		out 0x2a+1,r25
- 195 0034 8ABD      		out 0x2a,r24
- 196               	.LVL3:
- 197               	.LBB5:
- 198               	.LBB6:
- 199               		.file 2 "/usr/lib/avr/include/util/delay.h"
+ 169               		.loc 1 33 0
+ 170 0014 8FE3      		ldi r24,lo8(63)
+ 171 0016 9CE9      		ldi r25,lo8(-100)
+ 172 0018 97BD      		out 0x26+1,r25
+ 173 001a 86BD      		out 0x26,r24
+  34:main.c        **** 	DDRD = 0xff; //PD5 OC1A
+ 174               		.loc 1 34 0
+ 175 001c 8FEF      		ldi r24,lo8(-1)
+ 176 001e 81BB      		out 0x11,r24
+  35:main.c        **** 	DDRB = 0xff; //PB3 OC
+ 177               		.loc 1 35 0
+ 178 0020 87BB      		out 0x17,r24
+  36:main.c        **** 
+  37:main.c        **** 	
+  38:main.c        **** 	//COM1A1 (1)  COM1A0 (0) zerujemy stan jak jest 0, jedynkujemy jak OCR1
+  39:main.c        **** 	//TCCR1 jest bardziej zaawansowane
+  40:main.c        **** 	TCCR1A |= (1<<COM1A1) | (1<<WGM11);
+ 179               		.loc 1 40 0
+ 180 0022 9FB5      		in r25,0x2f
+ 181 0024 9268      		ori r25,lo8(-126)
+ 182 0026 9FBD      		out 0x2f,r25
+  41:main.c        **** 	TCCR1B |= (1<<WGM12) | (1<<WGM13) | (1<<CS11); //WGM jest od trybu, chcielismy jakis 14
+ 183               		.loc 1 41 0
+ 184 0028 9EB5      		in r25,0x2e
+ 185 002a 9A61      		ori r25,lo8(26)
+ 186 002c 9EBD      		out 0x2e,r25
+  42:main.c        **** 	
+  43:main.c        **** 	//TCCR0 jest uproszczona wersja
+  44:main.c        **** 	TCCR0 |= (1<<WGM01) | (1<<WGM00) | (1<<COM01) | (1<<COM00) | (1<<CS00); //fast PWM a com to tryb p
+ 187               		.loc 1 44 0
+ 188 002e 93B7      		in r25,0x33
+ 189 0030 9967      		ori r25,lo8(121)
+ 190 0032 93BF      		out 0x33,r25
+  45:main.c        **** 	
+  46:main.c        **** 	OCR0 = 0;
+ 191               		.loc 1 46 0
+ 192 0034 1CBE      		out 0x3c,__zero_reg__
+  47:main.c        **** 	
+  48:main.c        **** 	OCR1A = 3000; //wartosc centralna
+ 193               		.loc 1 48 0
+ 194 0036 28EB      		ldi r18,lo8(-72)
+ 195 0038 3BE0      		ldi r19,lo8(11)
+ 196 003a 3BBD      		out 0x2a+1,r19
+ 197 003c 2ABD      		out 0x2a,r18
+ 198               	.LVL3:
+ 199               	.LBB11:
+ 200               	.LBB12:
+ 201               		.file 2 "/usr/lib/avr/include/util/delay.h"
    1:/usr/lib/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
    2:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
    3:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
@@ -426,56 +436,134 @@
  185:/usr/lib/avr/include/util/delay.h **** 	#endif
  186:/usr/lib/avr/include/util/delay.h **** 
  187:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
- 200               		.loc 2 187 0
- 201 0036 2FEF      		ldi r18,lo8(6399999)
- 202 0038 87EA      		ldi r24,hi8(6399999)
- 203 003a 91E6      		ldi r25,hlo8(6399999)
- 204 003c 2150      	1:	subi r18,1
- 205 003e 8040      		sbci r24,0
- 206 0040 9040      		sbci r25,0
- 207 0042 01F4      		brne 1b
- 208 0044 00C0      		rjmp .
- 209 0046 0000      		nop
- 210               	.L10:
- 211 0048 00C0      		rjmp .L10
- 212               	.LBE6:
- 213               	.LBE5:
- 214               		.cfi_endproc
- 215               	.LFE8:
- 217               		.comm	etap,1,1
- 218               		.comm	i,1,1
- 219               		.comm	bufor,10,1
- 220               		.comm	y,1,1
- 221               		.comm	x,1,1
- 222               	.global	u_stream
- 223               		.data
- 226               	u_stream:
- 227 0000 0000 00   		.zero	3
- 228 0003 02        		.byte	2
- 229 0004 0000 0000 		.zero	4
- 230 0008 0000      		.word	gs(u_putc)
- 231 000a 0000      		.word	0
- 232 000c 0000      		.word	0
- 233               		.text
- 234               	.Letext0:
- 235               		.file 3 "/usr/lib/avr/include/stdint.h"
- 236               		.file 4 "/usr/lib/avr/include/stdio.h"
- 237               		.file 5 "usart.h"
- 238               		.file 6 "<built-in>"
+ 202               		.loc 2 187 0
+ 203 003e 2FEF      		ldi r18,lo8(6399999)
+ 204 0040 37EA      		ldi r19,hi8(6399999)
+ 205 0042 91E6      		ldi r25,hlo8(6399999)
+ 206 0044 2150      	1:	subi r18,1
+ 207 0046 3040      		sbci r19,0
+ 208 0048 9040      		sbci r25,0
+ 209 004a 01F4      		brne 1b
+ 210 004c 00C0      		rjmp .
+ 211 004e 0000      		nop
+ 212               	.LVL4:
+ 213               	.LBE12:
+ 214               	.LBE11:
+  49:main.c        **** 	_delay_ms(2000);
+  50:main.c        **** 	
+  51:main.c        **** 	//wersja Krzysia
+  52:main.c        **** 	TCCR2 |= (1<<WGM21) | (1<<WGM20) | (1<<COM21) | (1<<COM20) | (1<<CS20); //fast PWM a com to tryb p
+ 215               		.loc 1 52 0
+ 216 0050 95B5      		in r25,0x25
+ 217 0052 9967      		ori r25,lo8(121)
+ 218 0054 95BD      		out 0x25,r25
+  53:main.c        **** 	OCR2 = 255;
+ 219               		.loc 1 53 0
+ 220 0056 83BD      		out 0x23,r24
+ 221               	.L12:
+ 222               	.LVL5:
+  24:main.c        **** 	//USART
+ 223               		.loc 1 24 0
+ 224 0058 80E0      		ldi r24,0
+ 225               	.LVL6:
+ 226               	.L10:
+ 227               	.LBB13:
+  54:main.c        **** 	
+  55:main.c        **** 	while(1){
+  56:main.c        **** 		for(int i = 0; i<255; i++){
+  57:main.c        **** 			OCR0 = i;
+ 228               		.loc 1 57 0 discriminator 3
+ 229 005a 8CBF      		out 0x3c,r24
+  58:main.c        **** 			OCR2 = 255-i;
+ 230               		.loc 1 58 0 discriminator 3
+ 231 005c 982F      		mov r25,r24
+ 232 005e 9095      		com r25
+ 233 0060 93BD      		out 0x23,r25
+ 234               	.LVL7:
+ 235               	.LBB14:
+ 236               	.LBB15:
+ 237               		.loc 2 187 0 discriminator 3
+ 238 0062 EFE7      		ldi r30,lo8(15999)
+ 239 0064 FEE3      		ldi r31,hi8(15999)
+ 240 0066 3197      	1:	sbiw r30,1
+ 241 0068 01F4      		brne 1b
+ 242 006a 00C0      		rjmp .
+ 243 006c 0000      		nop
+ 244               	.LVL8:
+ 245 006e 8F5F      		subi r24,lo8(-(1))
+ 246               	.LBE15:
+ 247               	.LBE14:
+  56:main.c        **** 			OCR0 = i;
+ 248               		.loc 1 56 0 discriminator 3
+ 249 0070 8F3F      		cpi r24,lo8(-1)
+ 250 0072 01F4      		brne .L10
+ 251               	.L11:
+ 252               	.LBE13:
+ 253               	.LBB16:
+  59:main.c        **** 			_delay_ms(4);
+  60:main.c        **** 		}
+  61:main.c        **** 		for(int i = 255; i>0; i--){
+  62:main.c        **** 			OCR0 = i;
+ 254               		.loc 1 62 0 discriminator 3
+ 255 0074 8CBF      		out 0x3c,r24
+  63:main.c        **** 			OCR2 = 255-i;
+ 256               		.loc 1 63 0 discriminator 3
+ 257 0076 982F      		mov r25,r24
+ 258 0078 9095      		com r25
+ 259 007a 93BD      		out 0x23,r25
+ 260               	.LVL9:
+ 261               	.LBB17:
+ 262               	.LBB18:
+ 263               		.loc 2 187 0 discriminator 3
+ 264 007c EFE7      		ldi r30,lo8(15999)
+ 265 007e FEE3      		ldi r31,hi8(15999)
+ 266 0080 3197      	1:	sbiw r30,1
+ 267 0082 01F4      		brne 1b
+ 268 0084 00C0      		rjmp .
+ 269 0086 0000      		nop
+ 270               	.LVL10:
+ 271 0088 8150      		subi r24,lo8(-(-1))
+ 272               	.LBE18:
+ 273               	.LBE17:
+  61:main.c        **** 			OCR0 = i;
+ 274               		.loc 1 61 0 discriminator 3
+ 275 008a 01F4      		brne .L11
+ 276 008c 00C0      		rjmp .L12
+ 277               	.LBE16:
+ 278               		.cfi_endproc
+ 279               	.LFE8:
+ 281               		.comm	i,1,1
+ 282               		.comm	bufor,10,1
+ 283               		.comm	y,1,1
+ 284               		.comm	x,1,1
+ 285               	.global	u_stream
+ 286               		.data
+ 289               	u_stream:
+ 290 0000 0000 00   		.zero	3
+ 291 0003 02        		.byte	2
+ 292 0004 0000 0000 		.zero	4
+ 293 0008 0000      		.word	gs(u_putc)
+ 294 000a 0000      		.word	0
+ 295 000c 0000      		.word	0
+ 296               		.text
+ 297               	.Letext0:
+ 298               		.file 3 "/usr/lib/avr/include/stdint.h"
+ 299               		.file 4 "/usr/lib/avr/include/stdio.h"
+ 300               		.file 5 "usart.h"
+ 301               		.file 6 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/ccztrlmX.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/ccztrlmX.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/ccztrlmX.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/ccztrlmX.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/ccztrlmX.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/ccztrlmX.s:12     .text:0000000000000000 __vector_13
+     /tmp/ccuJw9PG.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccuJw9PG.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccuJw9PG.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccuJw9PG.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccuJw9PG.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccuJw9PG.s:12     .text:0000000000000000 __vector_13
                             *COM*:0000000000000001 i
                             *COM*:000000000000000a bufor
                             *COM*:0000000000000001 x
-     /tmp/ccztrlmX.s:149    .text.startup:0000000000000000 main
-     /tmp/ccztrlmX.s:226    .data:0000000000000000 u_stream
-                            *COM*:0000000000000001 etap
+     /tmp/ccuJw9PG.s:149    .text.startup:0000000000000000 main
+     /tmp/ccuJw9PG.s:289    .data:0000000000000000 u_stream
                             *COM*:0000000000000001 y
 
 UNDEFINED SYMBOLS
