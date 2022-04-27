@@ -1,0 +1,80 @@
+   1               		.file	"spi.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	SPI_MasterInit
+  12               	SPI_MasterInit:
+  13               	.LFB0:
+  14               		.file 1 "spi.c"
+   1:spi.c         **** #include "spi.h"
+   2:spi.c         **** 
+   3:spi.c         **** void SPI_MasterInit(void){
+  15               		.loc 1 3 0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+   4:spi.c         **** 	//ustawienie kierunku wyjś ciowego dla linii MOSI, SCK i SS
+   5:spi.c         **** 	DDRB |= (1<<MOSI)|(1<<SCK)|(1<<SS);
+  21               		.loc 1 5 0
+  22 0000 87B3      		in r24,0x17
+  23 0002 806B      		ori r24,lo8(-80)
+  24 0004 87BB      		out 0x17,r24
+   6:spi.c         **** 	//aktywacja SPI, tryb Master, prę dkoś ć zegara Fosc/64
+   7:spi.c         **** 	SPCR |= (1<<SPE)|(1<<MSTR)|(1<<SPR1);
+  25               		.loc 1 7 0
+  26 0006 8DB1      		in r24,0xd
+  27 0008 8265      		ori r24,lo8(82)
+  28 000a 8DB9      		out 0xd,r24
+  29 000c 0895      		ret
+  30               		.cfi_endproc
+  31               	.LFE0:
+  33               	.global	SPI_MasterTransmit
+  35               	SPI_MasterTransmit:
+  36               	.LFB1:
+   8:spi.c         **** }
+   9:spi.c         **** uint8_t SPI_MasterTransmit(uint8_t bajt){
+  37               		.loc 1 9 0
+  38               		.cfi_startproc
+  39               	.LVL0:
+  40               	/* prologue: function */
+  41               	/* frame size = 0 */
+  42               	/* stack size = 0 */
+  43               	.L__stack_usage = 0
+  10:spi.c         **** 	SPDR = bajt;
+  44               		.loc 1 10 0
+  45 000e 8FB9      		out 0xf,r24
+  46               	.L3:
+  11:spi.c         **** 	//czekamy na ustawienie flagi SPIF po zakończeniu transmisji
+  12:spi.c         **** 	while( !(SPSR&(1<<SPIF)) );
+  47               		.loc 1 12 0 discriminator 1
+  48 0010 779B      		sbis 0xe,7
+  49 0012 00C0      		rjmp .L3
+  13:spi.c         **** 	return SPDR;
+  50               		.loc 1 13 0
+  51 0014 8FB1      		in r24,0xf
+  52               	.LVL1:
+  14:spi.c         **** }
+  53               		.loc 1 14 0
+  54 0016 0895      		ret
+  55               		.cfi_endproc
+  56               	.LFE1:
+  58               	.Letext0:
+  59               		.file 2 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 spi.c
+     /tmp/ccI1hZiR.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccI1hZiR.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccI1hZiR.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccI1hZiR.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccI1hZiR.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccI1hZiR.s:12     .text:0000000000000000 SPI_MasterInit
+     /tmp/ccI1hZiR.s:35     .text:000000000000000e SPI_MasterTransmit
+
+NO UNDEFINED SYMBOLS
