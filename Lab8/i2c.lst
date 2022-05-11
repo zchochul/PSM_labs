@@ -1,0 +1,613 @@
+   1               		.file	"i2c.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	I2C_init
+  12               	I2C_init:
+  13               	.LFB0:
+  14               		.file 1 "i2c.c"
+   1:i2c.c         **** #include <avr/io.h> 
+   2:i2c.c         **** #include "i2c.h"
+   3:i2c.c         **** 
+   4:i2c.c         **** //procedura inicjalizujaca
+   5:i2c.c         **** void I2C_init(void){//ustawiamy predkosc transmisji
+  15               		.loc 1 5 0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+   6:i2c.c         **** 	TWBR = 72;
+  21               		.loc 1 6 0
+  22 0000 88E4      		ldi r24,lo8(72)
+  23 0002 80B9      		out 0,r24
+  24 0004 0895      		ret
+  25               		.cfi_endproc
+  26               	.LFE0:
+  28               	.global	twistart
+  30               	twistart:
+  31               	.LFB1:
+   7:i2c.c         **** }
+   8:i2c.c         **** 
+   9:i2c.c         **** // procedura transmisji sygnału START
+  10:i2c.c         **** void twistart(void)
+  11:i2c.c         **** {
+  32               		.loc 1 11 0
+  33               		.cfi_startproc
+  34               	/* prologue: function */
+  35               	/* frame size = 0 */
+  36               	/* stack size = 0 */
+  37               	.L__stack_usage = 0
+  12:i2c.c         **** TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);
+  38               		.loc 1 12 0
+  39 0006 84EA      		ldi r24,lo8(-92)
+  40 0008 86BF      		out 0x36,r24
+  41               	.L3:
+  13:i2c.c         **** while (!(TWCR & (1<<TWINT)));
+  42               		.loc 1 13 0 discriminator 1
+  43 000a 06B6      		in __tmp_reg__,0x36
+  44 000c 07FE      		sbrs __tmp_reg__,7
+  45 000e 00C0      		rjmp .L3
+  46               	/* epilogue start */
+  14:i2c.c         **** }
+  47               		.loc 1 14 0
+  48 0010 0895      		ret
+  49               		.cfi_endproc
+  50               	.LFE1:
+  52               	.global	twistop
+  54               	twistop:
+  55               	.LFB2:
+  15:i2c.c         **** 
+  16:i2c.c         **** // procedura transmisji sygnału STOP
+  17:i2c.c         **** void twistop(void)
+  18:i2c.c         **** {
+  56               		.loc 1 18 0
+  57               		.cfi_startproc
+  58               	/* prologue: function */
+  59               	/* frame size = 0 */
+  60               	/* stack size = 0 */
+  61               	.L__stack_usage = 0
+  19:i2c.c         **** TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWSTO);
+  62               		.loc 1 19 0
+  63 0012 84E9      		ldi r24,lo8(-108)
+  64 0014 86BF      		out 0x36,r24
+  65               	.L7:
+  20:i2c.c         **** while ((TWCR & (1<<TWSTO)));
+  66               		.loc 1 20 0 discriminator 1
+  67 0016 06B6      		in __tmp_reg__,0x36
+  68 0018 04FC      		sbrc __tmp_reg__,4
+  69 001a 00C0      		rjmp .L7
+  70               	/* epilogue start */
+  21:i2c.c         **** }
+  71               		.loc 1 21 0
+  72 001c 0895      		ret
+  73               		.cfi_endproc
+  74               	.LFE2:
+  76               	.global	twiwrite
+  78               	twiwrite:
+  79               	.LFB3:
+  22:i2c.c         **** 
+  23:i2c.c         **** // procedura transmisji bajtu danych
+  24:i2c.c         **** void twiwrite(uint8_t bajt)
+  25:i2c.c         **** {
+  80               		.loc 1 25 0
+  81               		.cfi_startproc
+  82               	.LVL0:
+  83               	/* prologue: function */
+  84               	/* frame size = 0 */
+  85               	/* stack size = 0 */
+  86               	.L__stack_usage = 0
+  26:i2c.c         **** TWDR = bajt;
+  87               		.loc 1 26 0
+  88 001e 83B9      		out 0x3,r24
+  27:i2c.c         **** TWCR = (1<<TWINT) | (1<<TWEN);
+  89               		.loc 1 27 0
+  90 0020 84E8      		ldi r24,lo8(-124)
+  91               	.LVL1:
+  92 0022 86BF      		out 0x36,r24
+  93               	.LVL2:
+  94               	.L10:
+  28:i2c.c         **** while (!(TWCR & (1<<TWINT)));
+  95               		.loc 1 28 0 discriminator 1
+  96 0024 06B6      		in __tmp_reg__,0x36
+  97 0026 07FE      		sbrs __tmp_reg__,7
+  98 0028 00C0      		rjmp .L10
+  99               	/* epilogue start */
+  29:i2c.c         **** }
+ 100               		.loc 1 29 0
+ 101 002a 0895      		ret
+ 102               		.cfi_endproc
+ 103               	.LFE3:
+ 105               	.global	twiread
+ 107               	twiread:
+ 108               	.LFB4:
+  30:i2c.c         **** //procedura odczytu bajtu danych
+  31:i2c.c         **** uint8_t twiread(uint8_t ack)
+  32:i2c.c         **** {
+ 109               		.loc 1 32 0
+ 110               		.cfi_startproc
+ 111               	.LVL3:
+ 112               	/* prologue: function */
+ 113               	/* frame size = 0 */
+ 114               	/* stack size = 0 */
+ 115               	.L__stack_usage = 0
+  33:i2c.c         **** TWCR = (1 << TWINT) | (1 << TWEN) | (ack << TWEA);
+ 116               		.loc 1 33 0
+ 117 002c 20E4      		ldi r18,lo8(64)
+ 118 002e 829F      		mul r24,r18
+ 119 0030 C001      		movw r24,r0
+ 120 0032 1124      		clr __zero_reg__
+ 121               	.LVL4:
+ 122 0034 8468      		ori r24,lo8(-124)
+ 123 0036 86BF      		out 0x36,r24
+ 124               	.L13:
+  34:i2c.c         **** while (!(TWCR & (1<<TWINT)));
+ 125               		.loc 1 34 0 discriminator 1
+ 126 0038 06B6      		in __tmp_reg__,0x36
+ 127 003a 07FE      		sbrs __tmp_reg__,7
+ 128 003c 00C0      		rjmp .L13
+  35:i2c.c         **** return TWDR;
+ 129               		.loc 1 35 0
+ 130 003e 83B1      		in r24,0x3
+  36:i2c.c         **** }
+ 131               		.loc 1 36 0
+ 132 0040 0895      		ret
+ 133               		.cfi_endproc
+ 134               	.LFE4:
+ 136               	.global	rtc_init
+ 138               	rtc_init:
+ 139               	.LFB5:
+  37:i2c.c         **** 
+  38:i2c.c         **** 
+  39:i2c.c         **** //DO ZEGARKA
+  40:i2c.c         **** void rtc_init(void){
+ 140               		.loc 1 40 0
+ 141               		.cfi_startproc
+ 142               	/* prologue: function */
+ 143               	/* frame size = 0 */
+ 144               	/* stack size = 0 */
+ 145               	.L__stack_usage = 0
+  41:i2c.c         **** 	twistart(); //bajt start
+ 146               		.loc 1 41 0
+ 147 0042 0E94 0000 		call twistart
+ 148               	.LVL5:
+  42:i2c.c         **** 	twiwrite(0xA2); //adres slave zeby zapisac
+ 149               		.loc 1 42 0
+ 150 0046 82EA      		ldi r24,lo8(-94)
+ 151 0048 0E94 0000 		call twiwrite
+ 152               	.LVL6:
+  43:i2c.c         **** 	twiwrite(0x0D);//adres komorki na ktorym chcemy wskaznik
+ 153               		.loc 1 43 0
+ 154 004c 8DE0      		ldi r24,lo8(13)
+ 155 004e 0E94 0000 		call twiwrite
+ 156               	.LVL7:
+  44:i2c.c         **** 	twiwrite(0b10000011); //na wyjsciu sygnal co sekunde
+ 157               		.loc 1 44 0
+ 158 0052 83E8      		ldi r24,lo8(-125)
+ 159 0054 0E94 0000 		call twiwrite
+ 160               	.LVL8:
+  45:i2c.c         **** 	twistop();
+ 161               		.loc 1 45 0
+ 162 0058 0C94 0000 		jmp twistop
+ 163               	.LVL9:
+ 164               		.cfi_endproc
+ 165               	.LFE5:
+ 167               	.global	rtc_set_date_time
+ 169               	rtc_set_date_time:
+ 170               	.LFB6:
+  46:i2c.c         **** }
+  47:i2c.c         **** void rtc_set_date_time(struct datetime mydt){
+ 171               		.loc 1 47 0
+ 172               		.cfi_startproc
+ 173 005c AF92      		push r10
+ 174               	.LCFI0:
+ 175               		.cfi_def_cfa_offset 3
+ 176               		.cfi_offset 10, -2
+ 177 005e BF92      		push r11
+ 178               	.LCFI1:
+ 179               		.cfi_def_cfa_offset 4
+ 180               		.cfi_offset 11, -3
+ 181 0060 CF92      		push r12
+ 182               	.LCFI2:
+ 183               		.cfi_def_cfa_offset 5
+ 184               		.cfi_offset 12, -4
+ 185 0062 DF92      		push r13
+ 186               	.LCFI3:
+ 187               		.cfi_def_cfa_offset 6
+ 188               		.cfi_offset 13, -5
+ 189 0064 EF92      		push r14
+ 190               	.LCFI4:
+ 191               		.cfi_def_cfa_offset 7
+ 192               		.cfi_offset 14, -6
+ 193 0066 FF92      		push r15
+ 194               	.LCFI5:
+ 195               		.cfi_def_cfa_offset 8
+ 196               		.cfi_offset 15, -7
+ 197 0068 0F93      		push r16
+ 198               	.LCFI6:
+ 199               		.cfi_def_cfa_offset 9
+ 200               		.cfi_offset 16, -8
+ 201 006a 1F93      		push r17
+ 202               	.LCFI7:
+ 203               		.cfi_def_cfa_offset 10
+ 204               		.cfi_offset 17, -9
+ 205 006c CF93      		push r28
+ 206               	.LCFI8:
+ 207               		.cfi_def_cfa_offset 11
+ 208               		.cfi_offset 28, -10
+ 209 006e DF93      		push r29
+ 210               	.LCFI9:
+ 211               		.cfi_def_cfa_offset 12
+ 212               		.cfi_offset 29, -11
+ 213 0070 CDB7      		in r28,__SP_L__
+ 214 0072 DEB7      		in r29,__SP_H__
+ 215               	.LCFI10:
+ 216               		.cfi_def_cfa_register 28
+ 217 0074 2797      		sbiw r28,7
+ 218               	.LCFI11:
+ 219               		.cfi_def_cfa_offset 19
+ 220 0076 0FB6      		in __tmp_reg__,__SREG__
+ 221 0078 F894      		cli
+ 222 007a DEBF      		out __SP_H__,r29
+ 223 007c 0FBE      		out __SREG__,__tmp_reg__
+ 224 007e CDBF      		out __SP_L__,r28
+ 225               	/* prologue: function */
+ 226               	/* frame size = 7 */
+ 227               	/* stack size = 17 */
+ 228               	.L__stack_usage = 17
+ 229 0080 D22E      		mov r13,r18
+ 230               	.LVL10:
+ 231 0082 C32E      		mov r12,r19
+ 232               	.LVL11:
+ 233 0084 B42E      		mov r11,r20
+ 234               	.LVL12:
+ 235 0086 E52E      		mov r14,r21
+ 236               	.LVL13:
+ 237 0088 F62E      		mov r15,r22
+ 238               	.LVL14:
+ 239 008a 072F      		mov r16,r23
+ 240               	.LVL15:
+ 241 008c A82E      		mov r10,r24
+ 242               	.LVL16:
+  48:i2c.c         **** 	twistart();
+ 243               		.loc 1 48 0
+ 244 008e 0E94 0000 		call twistart
+ 245               	.LVL17:
+  49:i2c.c         **** 	twiwrite(0xA2); //zeby zapisac
+ 246               		.loc 1 49 0
+ 247 0092 82EA      		ldi r24,lo8(-94)
+ 248 0094 0E94 0000 		call twiwrite
+ 249               	.LVL18:
+  50:i2c.c         **** 	twiwrite(0x02); //ustawiamy wskaznik na sekundy
+ 250               		.loc 1 50 0
+ 251 0098 82E0      		ldi r24,lo8(2)
+ 252 009a 0E94 0000 		call twiwrite
+ 253               	.LVL19:
+  51:i2c.c         **** 	twiwrite(dec2bcd(mydt.sec)); //ustawiamy sekundy faktycznie
+ 254               		.loc 1 51 0
+ 255 009e 1AE0      		ldi r17,lo8(10)
+ 256 00a0 8B2D      		mov r24,r11
+ 257 00a2 612F      		mov r22,r17
+ 258 00a4 0E94 0000 		call __udivmodqi4
+ 259 00a8 20E1      		ldi r18,lo8(16)
+ 260 00aa 829F      		mul r24,r18
+ 261 00ac 900D      		add r25,r0
+ 262 00ae 1124      		clr __zero_reg__
+ 263 00b0 892F      		mov r24,r25
+ 264 00b2 0E94 0000 		call twiwrite
+ 265               	.LVL20:
+  52:i2c.c         **** 	twiwrite(dec2bcd(mydt.min)); //ustawiamy sekundy minuty
+ 266               		.loc 1 52 0
+ 267 00b6 8C2D      		mov r24,r12
+ 268 00b8 612F      		mov r22,r17
+ 269 00ba 0E94 0000 		call __udivmodqi4
+ 270 00be 20E1      		ldi r18,lo8(16)
+ 271 00c0 829F      		mul r24,r18
+ 272 00c2 900D      		add r25,r0
+ 273 00c4 1124      		clr __zero_reg__
+ 274 00c6 892F      		mov r24,r25
+ 275 00c8 0E94 0000 		call twiwrite
+ 276               	.LVL21:
+  53:i2c.c         **** 	twiwrite(dec2bcd(mydt.hour)); 
+ 277               		.loc 1 53 0
+ 278 00cc 8D2D      		mov r24,r13
+ 279 00ce 612F      		mov r22,r17
+ 280 00d0 0E94 0000 		call __udivmodqi4
+ 281 00d4 20E1      		ldi r18,lo8(16)
+ 282 00d6 829F      		mul r24,r18
+ 283 00d8 900D      		add r25,r0
+ 284 00da 1124      		clr __zero_reg__
+ 285 00dc 892F      		mov r24,r25
+ 286 00de 0E94 0000 		call twiwrite
+ 287               	.LVL22:
+  54:i2c.c         **** 	twiwrite(dec2bcd(mydt.day));
+ 288               		.loc 1 54 0
+ 289 00e2 8E2D      		mov r24,r14
+ 290 00e4 612F      		mov r22,r17
+ 291 00e6 0E94 0000 		call __udivmodqi4
+ 292 00ea 20E1      		ldi r18,lo8(16)
+ 293 00ec 829F      		mul r24,r18
+ 294 00ee 900D      		add r25,r0
+ 295 00f0 1124      		clr __zero_reg__
+ 296 00f2 892F      		mov r24,r25
+ 297 00f4 0E94 0000 		call twiwrite
+ 298               	.LVL23:
+  55:i2c.c         **** 	twiwrite(dec2bcd(mydt.weekday));
+ 299               		.loc 1 55 0
+ 300 00f8 8F2D      		mov r24,r15
+ 301 00fa 612F      		mov r22,r17
+ 302 00fc 0E94 0000 		call __udivmodqi4
+ 303 0100 20E1      		ldi r18,lo8(16)
+ 304 0102 829F      		mul r24,r18
+ 305 0104 900D      		add r25,r0
+ 306 0106 1124      		clr __zero_reg__
+ 307 0108 892F      		mov r24,r25
+ 308 010a 0E94 0000 		call twiwrite
+ 309               	.LVL24:
+  56:i2c.c         **** 	twiwrite(dec2bcd(mydt.month));
+ 310               		.loc 1 56 0
+ 311 010e 802F      		mov r24,r16
+ 312 0110 612F      		mov r22,r17
+ 313 0112 0E94 0000 		call __udivmodqi4
+ 314 0116 20E1      		ldi r18,lo8(16)
+ 315 0118 829F      		mul r24,r18
+ 316 011a 900D      		add r25,r0
+ 317 011c 1124      		clr __zero_reg__
+ 318 011e 892F      		mov r24,r25
+ 319 0120 0E94 0000 		call twiwrite
+ 320               	.LVL25:
+  57:i2c.c         **** 	twiwrite(dec2bcd(mydt.year));
+ 321               		.loc 1 57 0
+ 322 0124 8A2D      		mov r24,r10
+ 323 0126 612F      		mov r22,r17
+ 324 0128 0E94 0000 		call __udivmodqi4
+ 325 012c 20E1      		ldi r18,lo8(16)
+ 326 012e 829F      		mul r24,r18
+ 327 0130 900D      		add r25,r0
+ 328 0132 1124      		clr __zero_reg__
+ 329 0134 892F      		mov r24,r25
+ 330 0136 0E94 0000 		call twiwrite
+ 331               	.LVL26:
+ 332               	/* epilogue start */
+  58:i2c.c         **** 	twistop();    
+  59:i2c.c         **** }
+ 333               		.loc 1 59 0
+ 334 013a 2796      		adiw r28,7
+ 335 013c 0FB6      		in __tmp_reg__,__SREG__
+ 336 013e F894      		cli
+ 337 0140 DEBF      		out __SP_H__,r29
+ 338 0142 0FBE      		out __SREG__,__tmp_reg__
+ 339 0144 CDBF      		out __SP_L__,r28
+ 340 0146 DF91      		pop r29
+ 341 0148 CF91      		pop r28
+ 342 014a 1F91      		pop r17
+ 343 014c 0F91      		pop r16
+ 344               	.LVL27:
+ 345 014e FF90      		pop r15
+ 346               	.LVL28:
+ 347 0150 EF90      		pop r14
+ 348               	.LVL29:
+ 349 0152 DF90      		pop r13
+ 350               	.LVL30:
+ 351 0154 CF90      		pop r12
+ 352               	.LVL31:
+ 353 0156 BF90      		pop r11
+ 354               	.LVL32:
+ 355 0158 AF90      		pop r10
+ 356               	.LVL33:
+  58:i2c.c         **** 	twistop();    
+ 357               		.loc 1 58 0
+ 358 015a 0C94 0000 		jmp twistop
+ 359               	.LVL34:
+ 360               		.cfi_endproc
+ 361               	.LFE6:
+ 363               	.global	rtc_get_date_time
+ 365               	rtc_get_date_time:
+ 366               	.LFB7:
+  60:i2c.c         **** void rtc_get_date_time(struct datetime* mydt){
+ 367               		.loc 1 60 0
+ 368               		.cfi_startproc
+ 369               	.LVL35:
+ 370 015e CF93      		push r28
+ 371               	.LCFI12:
+ 372               		.cfi_def_cfa_offset 3
+ 373               		.cfi_offset 28, -2
+ 374 0160 DF93      		push r29
+ 375               	.LCFI13:
+ 376               		.cfi_def_cfa_offset 4
+ 377               		.cfi_offset 29, -3
+ 378               	/* prologue: function */
+ 379               	/* frame size = 0 */
+ 380               	/* stack size = 2 */
+ 381               	.L__stack_usage = 2
+ 382 0162 EC01      		movw r28,r24
+  61:i2c.c         **** 	twistart();
+ 383               		.loc 1 61 0
+ 384 0164 0E94 0000 		call twistart
+ 385               	.LVL36:
+  62:i2c.c         **** 	twiwrite(0xA2);
+ 386               		.loc 1 62 0
+ 387 0168 82EA      		ldi r24,lo8(-94)
+ 388 016a 0E94 0000 		call twiwrite
+ 389               	.LVL37:
+  63:i2c.c         **** 	twiwrite(0x02);
+ 390               		.loc 1 63 0
+ 391 016e 82E0      		ldi r24,lo8(2)
+ 392 0170 0E94 0000 		call twiwrite
+ 393               	.LVL38:
+  64:i2c.c         **** 	twistart();
+ 394               		.loc 1 64 0
+ 395 0174 0E94 0000 		call twistart
+ 396               	.LVL39:
+  65:i2c.c         **** 	twiwrite(0xA3);
+ 397               		.loc 1 65 0
+ 398 0178 83EA      		ldi r24,lo8(-93)
+ 399 017a 0E94 0000 		call twiwrite
+ 400               	.LVL40:
+  66:i2c.c         **** 	uint8_t x;
+  67:i2c.c         **** 	x = twiread(1) & (0b01111111);
+ 401               		.loc 1 67 0
+ 402 017e 81E0      		ldi r24,lo8(1)
+ 403 0180 0E94 0000 		call twiread
+ 404               	.LVL41:
+  68:i2c.c         **** 	mydt->sec = bcd2dec(x);
+ 405               		.loc 1 68 0
+ 406 0184 982F      		mov r25,r24
+ 407 0186 9695      		lsr r25
+ 408 0188 9695      		lsr r25
+ 409 018a 9695      		lsr r25
+ 410 018c 9E70      		andi r25,lo8(14)
+ 411 018e 292F      		mov r18,r25
+ 412 0190 220F      		lsl r18
+ 413 0192 220F      		lsl r18
+ 414 0194 920F      		add r25,r18
+ 415 0196 8F70      		andi r24,lo8(15)
+ 416               	.LVL42:
+ 417 0198 890F      		add r24,r25
+ 418 019a 8A83      		std Y+2,r24
+  69:i2c.c         **** 	x = twiread(1) & (0b01111111);
+ 419               		.loc 1 69 0
+ 420 019c 81E0      		ldi r24,lo8(1)
+ 421 019e 0E94 0000 		call twiread
+ 422               	.LVL43:
+  70:i2c.c         **** 	mydt->min = bcd2dec(x);
+ 423               		.loc 1 70 0
+ 424 01a2 982F      		mov r25,r24
+ 425 01a4 9695      		lsr r25
+ 426 01a6 9695      		lsr r25
+ 427 01a8 9695      		lsr r25
+ 428 01aa 9E70      		andi r25,lo8(14)
+ 429 01ac 292F      		mov r18,r25
+ 430 01ae 220F      		lsl r18
+ 431 01b0 220F      		lsl r18
+ 432 01b2 920F      		add r25,r18
+ 433 01b4 8F70      		andi r24,lo8(15)
+ 434               	.LVL44:
+ 435 01b6 890F      		add r24,r25
+ 436 01b8 8983      		std Y+1,r24
+  71:i2c.c         **** 	x = twiread(1) & (0b00111111);
+ 437               		.loc 1 71 0
+ 438 01ba 81E0      		ldi r24,lo8(1)
+ 439 01bc 0E94 0000 		call twiread
+ 440               	.LVL45:
+  72:i2c.c         **** 	mydt->hour = bcd2dec(x);
+ 441               		.loc 1 72 0
+ 442 01c0 982F      		mov r25,r24
+ 443 01c2 9695      		lsr r25
+ 444 01c4 9695      		lsr r25
+ 445 01c6 9695      		lsr r25
+ 446 01c8 9670      		andi r25,lo8(6)
+ 447 01ca 292F      		mov r18,r25
+ 448 01cc 220F      		lsl r18
+ 449 01ce 220F      		lsl r18
+ 450 01d0 920F      		add r25,r18
+ 451 01d2 8F70      		andi r24,lo8(15)
+ 452               	.LVL46:
+ 453 01d4 890F      		add r24,r25
+ 454 01d6 8883      		st Y,r24
+  73:i2c.c         **** 	x = twiread(1) & (0b00111111);
+ 455               		.loc 1 73 0
+ 456 01d8 81E0      		ldi r24,lo8(1)
+ 457 01da 0E94 0000 		call twiread
+ 458               	.LVL47:
+  74:i2c.c         **** 	mydt->day = bcd2dec(x);
+ 459               		.loc 1 74 0
+ 460 01de 982F      		mov r25,r24
+ 461 01e0 9695      		lsr r25
+ 462 01e2 9695      		lsr r25
+ 463 01e4 9695      		lsr r25
+ 464 01e6 9670      		andi r25,lo8(6)
+ 465 01e8 292F      		mov r18,r25
+ 466 01ea 220F      		lsl r18
+ 467 01ec 220F      		lsl r18
+ 468 01ee 920F      		add r25,r18
+ 469 01f0 8F70      		andi r24,lo8(15)
+ 470               	.LVL48:
+ 471 01f2 890F      		add r24,r25
+ 472 01f4 8B83      		std Y+3,r24
+  75:i2c.c         **** 	x = twiread(1) & (0b00000111);
+ 473               		.loc 1 75 0
+ 474 01f6 81E0      		ldi r24,lo8(1)
+ 475 01f8 0E94 0000 		call twiread
+ 476               	.LVL49:
+  76:i2c.c         **** 	mydt->weekday = bcd2dec(x);
+ 477               		.loc 1 76 0
+ 478 01fc 8770      		andi r24,lo8(7)
+ 479               	.LVL50:
+ 480 01fe 8C83      		std Y+4,r24
+  77:i2c.c         **** 	x = twiread(1) & (0b00011111);
+ 481               		.loc 1 77 0
+ 482 0200 81E0      		ldi r24,lo8(1)
+ 483               	.LVL51:
+ 484 0202 0E94 0000 		call twiread
+ 485               	.LVL52:
+  78:i2c.c         **** 	mydt->month = bcd2dec(x);
+ 486               		.loc 1 78 0
+ 487 0206 84FB      		bst r24,4
+ 488 0208 9927      		clr r25
+ 489 020a 90F9      		bld r25,0
+ 490 020c 990F      		lsl r25
+ 491 020e 292F      		mov r18,r25
+ 492 0210 220F      		lsl r18
+ 493 0212 220F      		lsl r18
+ 494 0214 920F      		add r25,r18
+ 495 0216 8F70      		andi r24,lo8(15)
+ 496               	.LVL53:
+ 497 0218 890F      		add r24,r25
+ 498 021a 8D83      		std Y+5,r24
+  79:i2c.c         **** 	x = twiread(0) & (0b11111111);
+ 499               		.loc 1 79 0
+ 500 021c 80E0      		ldi r24,0
+ 501 021e 0E94 0000 		call twiread
+ 502               	.LVL54:
+  80:i2c.c         **** 	mydt->year = bcd2dec(x);
+ 503               		.loc 1 80 0
+ 504 0222 982F      		mov r25,r24
+ 505 0224 9295      		swap r25
+ 506 0226 9F70      		andi r25,lo8(15)
+ 507 0228 8F70      		andi r24,lo8(15)
+ 508               	.LVL55:
+ 509 022a 2AE0      		ldi r18,lo8(10)
+ 510 022c 929F      		mul r25,r18
+ 511 022e 800D      		add r24,r0
+ 512 0230 1124      		clr __zero_reg__
+ 513 0232 8E83      		std Y+6,r24
+ 514               	/* epilogue start */
+  81:i2c.c         **** 	twistop();
+  82:i2c.c         **** }
+ 515               		.loc 1 82 0
+ 516 0234 DF91      		pop r29
+ 517 0236 CF91      		pop r28
+ 518               	.LVL56:
+  81:i2c.c         **** 	twistop();
+ 519               		.loc 1 81 0
+ 520 0238 0C94 0000 		jmp twistop
+ 521               	.LVL57:
+ 522               		.cfi_endproc
+ 523               	.LFE7:
+ 525               	.Letext0:
+ 526               		.file 2 "i2c.h"
+ 527               		.file 3 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 i2c.c
+     /tmp/ccRhFY4j.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccRhFY4j.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccRhFY4j.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccRhFY4j.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccRhFY4j.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccRhFY4j.s:12     .text:0000000000000000 I2C_init
+     /tmp/ccRhFY4j.s:30     .text:0000000000000006 twistart
+     /tmp/ccRhFY4j.s:54     .text:0000000000000012 twistop
+     /tmp/ccRhFY4j.s:78     .text:000000000000001e twiwrite
+     /tmp/ccRhFY4j.s:107    .text:000000000000002c twiread
+     /tmp/ccRhFY4j.s:138    .text:0000000000000042 rtc_init
+     /tmp/ccRhFY4j.s:169    .text:000000000000005c rtc_set_date_time
+     /tmp/ccRhFY4j.s:365    .text:000000000000015e rtc_get_date_time
+
+UNDEFINED SYMBOLS
+__udivmodqi4
