@@ -157,12 +157,22 @@ Należy obsłużyć sytuacje wyjątkowe ( np. przez wysłanie komunikatu o błę
 
 ### Najważniejsze informacje
 Tutaj używa się cutecom, warto ogarnąć jak to działa, bo to zagadnienie się często na miniprojekcie pojawia ;) <br>
-## Lab6 (Magistrala SPI) <a name="Lab6"></a>
-[Instrukcja do zajęć]()<br>
+Ma dwie linie transmisyjne **RxD** i **TxD** i tryb pracy asynchroniczny i synchroniczny.
+
+
+## Lab6 (Magistrala SPI, czyli kręcenie potencjometrem) <a name="Lab6"></a>
+[Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_6.pdf) <- tutaj jest schemat podłączeń też, warto zobaczyć<br>
+[Wykład, który może pomóc](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w4.pdf)<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab6)<br>
 
 Lista poleceń:
-
+1. Napisać program główny, który będzie wyświetlał na wyświetlaczu LCD odczytany stan konwersji
+w postaci liczby oraz zmierzone napięcie w woltach [V] w postaci liczby zmiennoprzecinkowej (z
+3 miejscami po przecinku).
+2. Wzbogacić program o wyznaczanie wartości średniej z np. 20 pomiarów i wyświetlanie jej pod
+mierzoną wartością chwilową. Można przygotować procedurę wyznaczania średniej kroczącej
+(liczona w każdym momencie - bufor cykliczny), albo wyznaczana i wyświetlana po zebraniu 20
+próbek za każdym razem od początku.
 
 
 ## Lab7 (Wykorzystanie liczników do sterowania metodą PWM) <a name="Lab7"></a>
