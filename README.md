@@ -118,7 +118,12 @@ te wartości do zmiennych globalnych z punktu 3.
 pojawiały się co zadany okres czasu.
 
 ### Najważniejsze rzeczy do zapamiętania
-Tutaj zrobiłam całe dwa przerwania. Ten z timer1 robi brzęczyk, w momencie w którym czas jest zerowy, ten z timer0 wyświetla czas na wyświetlacz LCD. Ten brzęczyk to jest moja wariacja na temat, w poleceniu jest żeby po prostu czas leciał do przodu, więc trzeba zmienić `count--;` na `count++;` i usunąć fragment brzęczykowy wgl xD.
+Tutaj zrobiłam całe dwa przerwania. Ten z timer1 robi brzęczyk, w momencie w którym czas jest zerowy, ten z timer0 wyświetla czas na wyświetlacz LCD. Ten brzęczyk to jest moja wariacja na temat, w poleceniu jest żeby po prostu czas leciał do przodu, więc trzeba zmienić `count--;` na `count++;` i usunąć fragment brzęczykowy wgl xD. <br>
+Kolejna ważna ściąga: <br>
+![image](https://user-images.githubusercontent.com/87480906/170881094-79debde5-d741-4c1b-895a-2ad83be8a0ef.png)<br>
+![image](https://user-images.githubusercontent.com/87480906/170881109-0317ad34-f840-471e-b501-66bc1a8f5602.png)<br>
+![image](https://user-images.githubusercontent.com/87480906/170881131-a4969b89-5c08-416b-8658-e83a6795bf9f.png) <br>
+
 
 ## Lab5 (Magistrala RS232, czyli USART)
 [Instrukcja do zajęć]()<br>
