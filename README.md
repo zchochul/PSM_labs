@@ -6,7 +6,7 @@
 [NOTA KATALOGOWA](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/ATmega32.pdf)<br>
 ![image](https://user-images.githubusercontent.com/87480906/170861805-f1ba6554-a687-4328-9200-2bf17657b390.png)<br>
 
-#Spis treści<br>
+# Spis treści<br>
 1. [Lab1](#Lab1)
 2. [Lab2](#Lab2)
 3. [Lab3](#Lab3)
@@ -138,16 +138,31 @@ Kolejna ważna ściąga: <br>
 
 
 ## Lab5 (Magistrala RS232, czyli USART) <a name="Lab5"></a>
-[Instrukcja do zajęć]()<br>
+[Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_5.pdf)<br>
+[Wykład, który może pomóc](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w4.pdf)<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab5)<br>
 
 Lista poleceń:
+1. Napisać program, który będzie odbierał pojedyncze znaki wysyłane za pomocą magistrali RS232 z
+komputera PC. Jeśli odebranym znakiem będzie ‘x’ należy odesłać ciąg znaków “ok\n”
+2.  Przygotować kalkulator RPN (Reverse Polish Notation) w ramach interfejsu RS232. Użytkownik z
+podłączonego terminala wpisuje liczbę i zatwierdza znakiem nowej linii (‘\n’). Mikrokontroler odczytuje
+liczbę i zapisuje do zmiennej y (przed tym zmienną y przepisuje do zmiennej x). Użytkownik wpisuje
+drugą liczbę i zatwierdza znakiem nowej linii (‘\n’). Mikrokontroler przepisuje zmienną y do zmiennej
+x i zapisuje odczytaną z RS232 liczbę do zmiennej y. Użytkownik wpisuje działanie (‘+’, ‘-’, ‘*’, ‘/’) i
+zatwierdza znakiem nowej linii (‘\n’). Mikrokontroler oblicza wartość: x y i wynik zapisuje do zmiennej
+y oraz przesyła w postaci tekstowej poprzez RS232.
+Należy obsłużyć sytuacje wyjątkowe ( np. przez wysłanie komunikatu o błędzie) typu dzielenie przez
+0, niewłaściwa komenda itp.
 
+### Najważniejsze informacje
+Tutaj używa się cutecom, warto ogarnąć jak to działa, bo to zagadnienie się często na miniprojekcie pojawia ;) <br>
 ## Lab6 (Magistrala SPI) <a name="Lab6"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab6)<br>
 
 Lista poleceń:
+
 
 
 ## Lab7 (Wykorzystanie liczników do sterowania metodą PWM) <a name="Lab7"></a>
