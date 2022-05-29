@@ -37,8 +37,9 @@ int main(void){
 	
 	//COM1A1 (1)  COM1A0 (0) zerujemy stan jak jest 0, jedynkujemy jak OCR1
 	//TCCR1 jest bardziej zaawansowane
-	TCCR1A |= (1<<COM1A1) | (1<<WGM11);
-	TCCR1B |= (1<<WGM12) | (1<<WGM13) | (1<<CS11); //WGM jest od trybu, chcielismy jakis 14
+	TCCR1A |= (1<<COM1A1) | (1<<WGM11); // Clear OC1A/OC1B on compare match, set  OC1A/OC1B at BOTTOM, (non-inverting mode)
+	TCCR1B |= (1<<WGM12) | (1<<WGM13) | (1<<CS11); //WGM jest od trybu (fast PWM, dlatego 1 na wgm11, 12, 13), chcielismy jakis 14
+							//CS11 -  clkI/O/8 (From prescaler)
 	
 	//TCCR0 jest uproszczona wersja
 	TCCR0 |= (1<<WGM01) | (1<<WGM00) | (1<<COM01) | (1<<COM00) | (1<<CS00); //fast PWM a com to tryb porownywania cs00 od prescalera
