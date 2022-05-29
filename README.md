@@ -72,11 +72,23 @@ Jeszcze włączamy przerwania zewnętrzne jako ogół ustawiając dobry bit na r
 
 
 
-## Lab3 (Obsługa wyświetlacza alfanumerycznego LCD)
-[Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_3.pdf)
-[Kod]()
+## Lab3 (Obsługa wyświetlacza alfanumerycznego LCD, czyli początek pięknej przygody z wyświetlaczem LCD)
+[Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_3.pdf) <br>
+[Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab3) <br>
+[Wykład, który może pomóc](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w3.pdf)<br>
+[Nota katalogowa wyświetlacza LCD (tzw. instrukcja czarno-biała)](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/LCD.pdf), czyli jak zrobić, żeby wyświetlacz wyczyścić, przesunąć kursor, wyłączyć miganie i inne takie bajery, a ponadto jak zrobić konkretne literki!<br>
+[Algorytmy poszczególnych funkcji (tzw. instrukcja kolorowa)](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/Obsluga%20LCD.pdf)<br>
 
 Lista poleceń:
+1. Podłączyć wyświetlacz LCD do wyprowadzeń mikrokontrolera
+2. W programie głównym zainicjować wyświetlacz oraz skonfigurować go do pracy w zadanym trybie.
+3. Wyświetlić przykładowy znak, przesunąć kursor i wyświetlić znak w innym miejscu, wyświetlić napis znajdujący się w pamięci programu.
+4. Na podstawie dokumentacji biblioteki stdio.h, stworzyć funkcję obsługującą standardowe wyjście (stdout) z wykorzystaniem wyświetlacza LCD oraz utworzyć własne standardowe wyjście i przekierować do niego stdout, tak aby używając funkcji printf wyświetlać na nim informacje.
+5. Zbadać wpływ włączenia obsługi liczb zmiennoprzecinkowych na objętość programu oraz możliwości wyświetlania za pomocą funkcji printf.
+
+### Najważniejsze informacje
+Jak podpiąć to ustrojstwo? <br>
+![image](https://user-images.githubusercontent.com/87480906/170863104-d2c9831c-8135-4e9e-9c67-f569ba1b0120.png) <- często będziemy to robić w przyszłości, więc warto pamiętać<br>
 
 ## Lab4
 [Instrukcja do zajęć]()
