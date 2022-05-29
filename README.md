@@ -6,10 +6,22 @@
 [NOTA KATALOGOWA](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/ATmega32.pdf)<br>
 ![image](https://user-images.githubusercontent.com/87480906/170861805-f1ba6554-a687-4328-9200-2bf17657b390.png)<br>
 
+#Spis treści<br>
+1. [Lab1](#Lab1)
+2. [Lab2](#Lab2)
+3. [Lab3](#Lab3)
+4. [Lab4](#Lab4)
+5. [Lab5](#Lab5)
+6. [Lab6](#Lab6)
+7. [Lab7](#Lab7)
+8. [Lab8](#Lab8)
+9. [Lab9](#Lab9)
+10. [Lab10](#Lab10)
+
 ## Lab0 (Zajęcia wstępne)
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab0) <br>
 
-## Lab1 (Porty wejścia-wyjścia GPIO)
+## Lab1 (Porty wejścia-wyjścia GPIO) <a name="Lab1"></a>
 [Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_1.pdf) <br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab1)<br>
 [Wykład, który może pomóc](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w2.pdf)<br>
@@ -37,7 +49,7 @@ MIGANIE: <br>
 
 ```
 
-## Lab2 (Przerwania, priorytety przerwań, przerwania zewnętrzne) (zapalanie liczby zliczeń w postaci binarnej z wykorzystaniem diody led)
+## Lab2 (Przerwania, priorytety przerwań, przerwania zewnętrzne) (zapalanie liczby zliczeń w postaci binarnej z wykorzystaniem diody led) <a name="Lab2"></a>
 [Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_2.pdf)<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab2)<br>
 [Wykład, który może pomóc](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w3.pdf)<br>
@@ -72,7 +84,7 @@ Jeszcze włączamy przerwania zewnętrzne jako ogół ustawiając dobry bit na r
 
 
 
-## Lab3 (Obsługa wyświetlacza alfanumerycznego LCD, czyli początek pięknej przygody z wyświetlaczem LCD)
+## Lab3 (Obsługa wyświetlacza alfanumerycznego LCD, czyli początek pięknej przygody z wyświetlaczem LCD) <a name="Lab3"></a>
 [Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_3.pdf) <br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab3) <br>
 [Nota katalogowa wyświetlacza LCD (tzw. instrukcja czarno-biała)](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/LCD.pdf), czyli jak zrobić, żeby wyświetlacz wyczyścić, przesunąć kursor, wyłączyć miganie i inne takie bajery, a ponadto jak zrobić konkretne literki!<br>
@@ -89,7 +101,7 @@ Lista poleceń:
 Jak podpiąć to ustrojstwo? <br>
 ![image](https://user-images.githubusercontent.com/87480906/170863104-d2c9831c-8135-4e9e-9c67-f569ba1b0120.png) <- często będziemy to robić w przyszłości, więc warto pamiętać<br>
 
-## Lab4 ( Liczniki i ich obsługa, czyli krótki tutorial jak zrobić stoper)
+## Lab4 ( Liczniki i ich obsługa, czyli krótki tutorial jak zrobić stoper) <a name="Lab4"></a>
 [Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_4.pdf) <br>
 [Wykład, który może się przydać](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w3.pdf) <- druga połowa prezentacji <br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab4)<br>
@@ -125,34 +137,34 @@ Kolejna ważna ściąga: <br>
 ![image](https://user-images.githubusercontent.com/87480906/170881131-a4969b89-5c08-416b-8658-e83a6795bf9f.png) <br>
 
 
-## Lab5 (Magistrala RS232, czyli USART)
+## Lab5 (Magistrala RS232, czyli USART) <a name="Lab5"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab5)<br>
 
 Lista poleceń:
 
-## Lab6 (Magistrala SPI)
+## Lab6 (Magistrala SPI) <a name="Lab6"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab6)<br>
 
 Lista poleceń:
 
 
-## Lab7 (Wykorzystanie liczników do sterowania metodą PWM)
+## Lab7 (Wykorzystanie liczników do sterowania metodą PWM) <a name="Lab7"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab7)<br>
 
 
 Lista poleceń:
 
-## Lab8 (Magistrala I2C)
+## Lab8 (Magistrala I2C) <a name="Lab8"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab8)<br>
 
 
 Lista poleceń:
 
-## Lab9 (Magistrala 1-Wire)
+## Lab9 (Magistrala 1-Wire) <a name="Lab9"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab9)<br>
 [Kod, tzw przedsmak kolosa](https://github.com/zchochul/PSM_labs/tree/main/Lab9_dodatkowe)<br>
@@ -160,7 +172,7 @@ Lista poleceń:
 
 Lista poleceń:
 
-## Lab10 (Obsługa kart SD)
+## Lab10 (Obsługa kart SD) <a name="Lab10"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab10)<br>
 
