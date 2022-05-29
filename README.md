@@ -98,40 +98,41 @@ Lista poleceń:
 
 ## Lab5 (Magistrala RS232, czyli USART)
 [Instrukcja do zajęć]()<br>
-[Kod]()<br>
+[Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab5)<br>
 
 Lista poleceń:
 
 ## Lab6 (Magistrala SPI)
 [Instrukcja do zajęć]()<br>
-[Kod]()<br>
+[Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab6)<br>
 
 Lista poleceń:
 
 
 ## Lab7 (Wykorzystanie liczników do sterowania metodą PWM)
 [Instrukcja do zajęć]()<br>
-[Kod]()<br>
+[Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab7)<br>
 
 
 Lista poleceń:
 
 ## Lab8 (Magistrala I2C)
 [Instrukcja do zajęć]()<br>
-[Kod]()<br>
+[Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab8)<br>
 
 
 Lista poleceń:
 
 ## Lab9 (Magistrala 1-Wire)
 [Instrukcja do zajęć]()<br>
-[Kod]()<br>
+[Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab9)<br>
+[Kod, tzw przedsmak kolosa](https://github.com/zchochul/PSM_labs/tree/main/Lab9_dodatkowe)<br>
 
 
 Lista poleceń:
 
 ## Lab10 (Obsługa kart SD)
 [Instrukcja do zajęć]()<br>
-[Kod]()<br>
+[Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab10)<br>
 
 Lista poleceń:
