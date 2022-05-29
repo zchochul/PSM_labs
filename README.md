@@ -175,30 +175,59 @@ mierzoną wartością chwilową. Można przygotować procedurę wyznaczania śre
 próbek za każdym razem od początku.
 
 
-## Lab7 (Wykorzystanie liczników do sterowania metodą PWM) <a name="Lab7"></a>
+## Lab7 (Wykorzystanie liczników do sterowania metodą PWM, czyli znowu USART) <a name="Lab7"></a>
 [Instrukcja do zajęć]()<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab7)<br>
-
+[Nota katalogowa serwomechanizmu](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/Servomanual.pdf)<br>
+Jakaś kolejna [nota katalogowa do serwomechanizmu](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/HS-322HD%20Standard%20Deluxe.pdf)<br>
 
 Lista poleceń:
+1. sterowanie serwomechanizmu o podłączenie poprzez interfejs RS232 z komputera. Użytkownik powinien podać kąt nastawy serwa w zakresie ±90 stopni w terminalu szeregowym, w wyniku
+czego mikrokontroler powinien ustawić we właściwy sposób rejestr OCR1A i serwo powinno ustawić
+się w zadanym położeniu
 
-## Lab8 (Magistrala I2C) <a name="Lab8"></a>
-[Instrukcja do zajęć]()<br>
+### Najważniejsze info
+Celem tego ćwiczenia jest zapoznanie się z metodą sterowania urządzeń za pomocą modulacji szerokości
+impulsu (PWM) z wykorzystaniem odpowiednich trybów liczników wbudowanych w mikrokontroler
+ATmega32. Sterowanymi elementami są serwomechanizm modelarski oraz dioda LED. <br>
+
+## Lab8 (Magistrala I2C, czyli TWI w wersji ATMELA) <a name="Lab8"></a>
+[Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_9_v0_2.pdf)<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab8)<br>
-
+[Wykład, który może pomóc](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w5.pdf)<br>
 
 Lista poleceń:
+1. Wykonać program, który ustawi zegar RTC oraz będzie wyświetlał czas oraz datę na wyświetlaczu LCD,
+tak aby kolejne wyświetlenia wykonywały się co 1 sekundę (w obsłudze przerwania zewnętrznego
+INT0). Do wyprowadzenia INT0 mikrokontrolera doprowadzić sygnał z pinu CLK obok układu PCF8563.
+Wytwarzanie zbocza narastającego na wyjściu układu PCF8563 skonfigurować w funkcji RTC_init().
 
-## Lab9 (Magistrala 1-Wire) <a name="Lab9"></a>
-[Instrukcja do zajęć]()<br>
+### Najważniejsze informacje:
+Ważna ściąga:<br>
+![image](https://user-images.githubusercontent.com/87480906/170884479-ad9a1f6d-75aa-4d74-8b08-a792e0c14a71.png)<br>
+Bardzo przydatny interfejs szeregowy, jakby się chciało np jak na zajęciach podpiąć układ zegarkowy RTC! Można normalnie z niego odczytać godzinę i wczytać na ekran LCD i to właśnie będziemy robić, super opcja.<br>
+Działa to na zasadzie magistrali do której podpina się master i slave, więc można tak podpiąć inne rzeczy np: akcelerometr, żyroskop, komas, wyświetlacz LCD.
+
+## Lab9 (Magistrala 1-Wire, czyli jak szybko i tanio sprawdzić płeć xD) <a name="Lab9"></a>
+[Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_10.pdf)<br>
+[Wykład, który może pomóc](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w5.pdf)<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab9)<br>
 [Kod, tzw przedsmak kolosa](https://github.com/zchochul/PSM_labs/tree/main/Lab9_dodatkowe)<br>
 
 
 Lista poleceń:
+1. Przygotować program główny, który na wyświetlaczu LCD prezentować będzie aktualną temperaturę otoczenia. Wyświetlana wartość temperatury powinna zawierać wartości ułamkowe. Można to prosto uzyskać bez korzystania z liczb zmiennoprzecinkowych (double).
 
-## Lab10 (Obsługa kart SD) <a name="Lab10"></a>
-[Instrukcja do zajęć]()<br>
+## Lab10 (Obsługa kart SD, czyli zapiszmy temperaturę na kartę SD) <a name="Lab10"></a>
+[Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_11.pdf)<br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab10)<br>
 
 Lista poleceń:
+1. Przygotować program loggera temperatury na kartę SD, który co sekundę będzie dokonywał
+pomiaru temperatury, a następnie zapisywał do pliku tekstowego data.txt na karcie SD w formacie: numer pomiaru, znak tabulacji, wartość rzeczywista temperatury,znaki końca linii (‘\r’ i ‘\n’).
+Podłączony przycisk wykorzystać jako sygnał do zakończenia zapisywania temperatur na kartę
+SD (zamknięcie pliku i przerwanie akwizycji danych a następnie wejście w pętlę nieskończoną).
+2. Rozszerzyć program o tworzenie nowych plików - nazwa z numerem: np. data0.txt data1.txt za
+każdym ponownym uruchomieniem (tak aby starsze pliki pozostawały na karcie).
+
+
