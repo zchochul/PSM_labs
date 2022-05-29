@@ -89,12 +89,36 @@ Lista poleceń:
 Jak podpiąć to ustrojstwo? <br>
 ![image](https://user-images.githubusercontent.com/87480906/170863104-d2c9831c-8135-4e9e-9c67-f569ba1b0120.png) <- często będziemy to robić w przyszłości, więc warto pamiętać<br>
 
-## Lab4 ( Liczniki i ich obsługa)
+## Lab4 ( Liczniki i ich obsługa, czyli krótki tutorial jak zrobić stoper)
 [Instrukcja do zajęć](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/PSM_Instrukcja_4.pdf) <br>
 [Wykład, który może się przydać](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/media/PSM/PSM_w3.pdf) <- druga połowa prezentacji <br>
 [Kod](https://github.com/zchochul/PSM_labs/tree/main/Lab4)<br>
 
-Lista poleceń:
+Lista poleceń:<br>
+_Część I_
+1. Podłączenie przycisku do **PD6** i diody do **PC0**
+2. Obliczenia... Skonfigurować licznik do pracy z zadana częstotliwością wejściową. Należy w tym przypadku
+wyznaczyć najlepszą możliwą częstotliwość sygnały podawanego na wejście licznika Timer/Counter1 tak, aby odmierzanie czasu było jak najdokładniejsze. <br>
+**UWAGA! Częstotliwość zegara mikrokontrolera dla płytek EvB 5.1 wyznacza kwarc zewnętrzny F_CPU = 16 MHz**
+3. Zdefiniować w programie głównym opóźnienie realizowane przez licznik 1, a następnie zadeklarować zmienną określającą wartość początkową licznika (bądź końcową w zależności od wyboru trybu pracy) obliczaną dynamicznie na podstawie wpisanego wyżej opóźnienia.
+4. Skonfigurować licznik zgodnie z założonym trybem pracy.
+5. W obsłudze przerwania (generowanego w momencie przepełniania licznika bądź porównania)
+wykonać sprawdzanie stanu przycisku, a informacje o włączeniu bądź wyłączeniu urządzenia
+przekazać do pętli głównej programu.
+6. W pętli głównej programu umieścić sterowanie (wł/wył) diody LED w zależności od stanu urządzenia.
+_Część II_<br>
+1. Zapoznać się ze sposobem sterowania wyświetlaczem LED dostępnym w zestawie.
+2. Podłączenie katod: A-G <–> **PD0-PD6**, Dot <–> **PD7**, podłączenie anod (sterowanie przez tranzystory pnp, więc stan aktywny 0): Digit 1-4 <–> **PC3-PC0**.
+3. Skonfigurować licznik (Timer/Counter0) tak aby co 2 ms wykonywał zapalenie kolejnej cyfry na
+wyświetlaczu. Wartości cyfr do wyświetlenia należy przechowywać w zmiennych globalnych (np.
+j,d,s,t).
+4. Napisać funkcję, która przyjmować będzie jeden argument (typu np. uint16_t czyli liczbę do wyświetlenia) i na tej podstawie wyznaczać cyfry jedności, dziesiątek, setek i tysięcy oraz wpisywać
+te wartości do zmiennych globalnych z punktu 3.
+5. Wykorzystać w pętli głównej programu funkcję z punktu 4 tak aby kolejne liczby od 0 do 9999
+pojawiały się co zadany okres czasu.
+
+### Najważniejsze rzeczy do zapamiętania
+Tutaj zrobiłam całe dwa przerwania. Ten z timer1 robi brzęczyk, w momencie w którym czas jest zerowy, ten z timer0 wyświetla czas na wyświetlacz LCD. Ten brzęczyk to jest moja wariacja na temat, w poleceniu jest żeby po prostu czas leciał do przodu, więc trzeba zmienić `count--;` na `count++;` i usunąć fragment brzęczykowy wgl xD.
 
 ## Lab5 (Magistrala RS232, czyli USART)
 [Instrukcja do zajęć]()<br>
