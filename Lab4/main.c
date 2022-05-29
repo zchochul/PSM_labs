@@ -48,11 +48,14 @@ int main(void){
 	TCCR1B |= (1<<WGM12)|(1<<CS10);
 	//bit porownawczy
 	OCR1A = 16000; //skok o sekunde
-	TIMSK |= (1<< OCIE1A);
+	TIMSK |= (1<< OCIE1A); //Timer/Counter Interrupt Mask Register – TIMSK
+				//OCIE1A , Output Compare A Match Interrupt Enable
 	
 	//drugi interrupt
 	OCR0 = 39; //200 razy na sekunde
-	TCCR0 |= (1<<WGM01)|(1<<CS02)|(1<<CS00); //CTC i prescaler
+	TCCR0 |= (1<<WGM01)|(1<<CS02)|(1<<CS00); //CTC i prescaler 
+							///WGM01 na 1 daje CTC
+							//CS02 i CS00 na 1 daje clk / 1024
 	TIMSK |=(1<<OCIE0);
 	
 	sei();
