@@ -1,0 +1,145 @@
+   1               		.file	"usart.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	USART_Init
+  12               	USART_Init:
+  13               	.LFB1:
+  14               		.file 1 "usart.c"
+   1:usart.c       **** #include <usart.h>
+   2:usart.c       **** 
+   3:usart.c       **** void USART_Init( unsigned int baud )
+   4:usart.c       **** {
+  15               		.loc 1 4 0
+  16               		.cfi_startproc
+  17               	.LVL0:
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20               	/* stack size = 0 */
+  21               	.L__stack_usage = 0
+   5:usart.c       **** 	/* prę dkoś ć transmisji */
+   6:usart.c       **** 	UBRRH = (unsigned char)(baud>>8);
+  22               		.loc 1 6 0
+  23 0000 90BD      		out 0x20,r25
+   7:usart.c       **** 	UBRRL = (unsigned char)baud;
+  24               		.loc 1 7 0
+  25 0002 89B9      		out 0x9,r24
+   8:usart.c       **** 	/* Format ramki: słowo=8bitów, 2 bity stopu */
+   9:usart.c       **** 	UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);
+  26               		.loc 1 9 0
+  27 0004 8EE8      		ldi r24,lo8(-114)
+  28               	.LVL1:
+  29 0006 80BD      		out 0x20,r24
+  10:usart.c       **** 	/* Włą czenie odbiornika i nadajnika */
+  11:usart.c       **** 	UCSRB = (1<<RXEN)|(1<<TXEN);
+  30               		.loc 1 11 0
+  31 0008 88E1      		ldi r24,lo8(24)
+  32 000a 8AB9      		out 0xa,r24
+  12:usart.c       **** 	/* Włą czenie przerwania, gdy przyszła dana */
+  13:usart.c       **** 	UCSRB |= (1<<RXCIE);
+  33               		.loc 1 13 0
+  34 000c 579A      		sbi 0xa,7
+  35 000e 0895      		ret
+  36               		.cfi_endproc
+  37               	.LFE1:
+  39               	.global	USART_Transmit
+  41               	USART_Transmit:
+  42               	.LFB2:
+  14:usart.c       **** }
+  15:usart.c       **** 
+  16:usart.c       **** 
+  17:usart.c       **** void USART_Transmit( unsigned char data )
+  18:usart.c       **** {
+  43               		.loc 1 18 0
+  44               		.cfi_startproc
+  45               	/* prologue: function */
+  46               	/* frame size = 0 */
+  47               	/* stack size = 0 */
+  48               	.L__stack_usage = 0
+  49               	.LVL2:
+  50               	.L3:
+  19:usart.c       **** 	/* Czekaj, aż zwolni się bufor nadajnika */
+  20:usart.c       **** 	while ( !( UCSRA & (1<<UDRE)) );
+  51               		.loc 1 20 0 discriminator 1
+  52 0010 5D9B      		sbis 0xb,5
+  53 0012 00C0      		rjmp .L3
+  21:usart.c       **** 	/* Umieś ć daną w buforze i ją wyś lij */
+  22:usart.c       **** 	UDR = data;
+  54               		.loc 1 22 0
+  55 0014 8CB9      		out 0xc,r24
+  56 0016 0895      		ret
+  57               		.cfi_endproc
+  58               	.LFE2:
+  60               	.global	USART_Receive
+  62               	USART_Receive:
+  63               	.LFB3:
+  23:usart.c       **** }
+  24:usart.c       **** 
+  25:usart.c       **** unsigned char USART_Receive( void )
+  26:usart.c       **** {
+  64               		.loc 1 26 0
+  65               		.cfi_startproc
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68               	/* stack size = 0 */
+  69               	.L__stack_usage = 0
+  70               	.L8:
+  27:usart.c       **** 	/* Czekaj, aż pojawi się dana do odbioru */
+  28:usart.c       **** 	while ( !(UCSRA & (1<<RXC)) ) ;
+  71               		.loc 1 28 0 discriminator 1
+  72 0018 5F9B      		sbis 0xb,7
+  73 001a 00C0      		rjmp .L8
+  29:usart.c       **** 	/* Odbierz daną */
+  30:usart.c       **** 	return UDR;
+  74               		.loc 1 30 0
+  75 001c 8CB1      		in r24,0xc
+  31:usart.c       **** }
+  76               		.loc 1 31 0
+  77 001e 0895      		ret
+  78               		.cfi_endproc
+  79               	.LFE3:
+  81               	.global	u_putc
+  83               	u_putc:
+  84               	.LFB4:
+  32:usart.c       **** 
+  33:usart.c       **** int u_putc(char c, FILE *unused){
+  85               		.loc 1 33 0
+  86               		.cfi_startproc
+  87               	.LVL3:
+  88               	/* prologue: function */
+  89               	/* frame size = 0 */
+  90               	/* stack size = 0 */
+  91               	.L__stack_usage = 0
+  34:usart.c       **** 	USART_Transmit(c);
+  92               		.loc 1 34 0
+  93 0020 0E94 0000 		call USART_Transmit
+  94               	.LVL4:
+  35:usart.c       **** 	return 0;
+  36:usart.c       **** }
+  95               		.loc 1 36 0
+  96 0024 80E0      		ldi r24,0
+  97 0026 90E0      		ldi r25,0
+  98 0028 0895      		ret
+  99               		.cfi_endproc
+ 100               	.LFE4:
+ 102               	.Letext0:
+ 103               		.file 2 "/usr/lib/avr/include/stdio.h"
+ 104               		.file 3 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 usart.c
+     /tmp/cc9P23C5.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc9P23C5.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc9P23C5.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc9P23C5.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc9P23C5.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc9P23C5.s:12     .text:0000000000000000 USART_Init
+     /tmp/cc9P23C5.s:41     .text:0000000000000010 USART_Transmit
+     /tmp/cc9P23C5.s:62     .text:0000000000000018 USART_Receive
+     /tmp/cc9P23C5.s:83     .text:0000000000000020 u_putc
+
+NO UNDEFINED SYMBOLS
