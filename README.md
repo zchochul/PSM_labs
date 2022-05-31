@@ -5,7 +5,7 @@
 [Instrukcja płytki prototypowej (atmega32)](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Instrukcja-EvB5_1-v1.pdf)<br>
 [NOTA KATALOGOWA](http://fizyka.if.pw.edu.pl/~labe/data/_uploaded/file/psm/materialy/Noty_katalogowe/ATmega32.pdf)<br>
 ![image](https://user-images.githubusercontent.com/87480906/170861805-f1ba6554-a687-4328-9200-2bf17657b390.png)<br>
-
+Ważna informacja, znaczek stopnia można zrobić tak `printf("%c\n",0xf8);`.
 # Spis treści<br>
 1. [Lab1](#Lab1)
 2. [Lab2](#Lab2)
